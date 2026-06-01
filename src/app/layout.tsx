@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Harshil Maheshwari - Portfolio",
-  description: "Portfolio of Harshil Maheshwari showcasing projects, clubs, and expertise",
+  title: "Harshil Maheshwari",
+  description: "Portfolio of Harshil Maheshwari showcasing projects, clubs and expertise",
 };
 
 export default function RootLayout({
