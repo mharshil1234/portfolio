@@ -50,17 +50,17 @@ export default function Navbar({
   };
 
   const getButtonClass = (sectionId: string) => {
-    const baseClass = 'px-4 py-2 rounded-lg transition-colors font-medium';
+    const baseClass = 'px-4 py-2 rounded-2xl transition-all duration-300 font-medium';
     if (activeSection === sectionId) {
-      return `${baseClass} text-blue-600`;
+      return `${baseClass} bg-blue-600 text-white shadow-lg shadow-blue-500/30`;
     }
-    return `${baseClass} text-black hover:text-gray-600`;
+    return `${baseClass} text-gray-300 hover:text-white hover:bg-gray-700`;
   };
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-fit">
-      <div className="bg-white rounded-full shadow-xl px-8 py-3 backdrop-blur-sm">
-        <div className="flex justify-center items-center gap-2 text-black">
+      <div className="bg-gray-900/80 backdrop-blur-md rounded-full shadow-2xl px-8 py-3 border border-gray-700/50">
+        <div className="flex justify-center items-center gap-2">
           <button
             onClick={() => scrollToSection(aboutRef)}
             className={getButtonClass('about')}
