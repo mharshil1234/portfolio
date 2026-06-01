@@ -3,10 +3,6 @@ import React, { forwardRef } from 'react';
 const Skills = forwardRef<HTMLElement>((_, ref) => {
   const skills = [
     {
-      category: 'Programming Languages',
-      items: ['JavaScript', 'TypeScript', 'Java', 'C++'],
-    },
-    {
       category: 'Frontend',
       items: ['React', 'Next.js', 'Tailwind CSS', 'HTML', 'CSS'],
     },
@@ -19,7 +15,11 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
       items: ['Redis', 'MongoDB', 'PostgreSQL'],
     },
     {
-      category: 'DevOps',
+      category: 'Programming Languages',
+      items: ['JavaScript', 'TypeScript', 'Java', 'C++'],
+    },
+    {
+      category: 'Tools & Platforms',
       items: ['Docker', 'Git', 'Linux'],
     },
   ];
