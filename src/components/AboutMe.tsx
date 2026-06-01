@@ -4,7 +4,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
   return (
     <section
       ref={ref}
-      className="w-full min-h-screen bg-[#190a32] text-white flex items-center justify-center pt-20"
+      className="w-full min-h-screen flex items-center justify-center pt-20"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl sm:text-5xl font-bold mb-8">About Me</h2>

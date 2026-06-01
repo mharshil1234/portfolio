@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Harshil Maheshwar - Portfolio",
-  description: "Portfolio of Harshil Maheshwar showcasing projects, clubs, and expertise",
+  title: "Harshil Maheshwari - Portfolio",
+  description: "Portfolio of Harshil Maheshwari showcasing projects, clubs, and expertise",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#190a32] text-white">{children}</body>
     </html>
   );
 }
