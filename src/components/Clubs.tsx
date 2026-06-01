@@ -32,4 +32,4 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
 
 Clubs.displayName = 'Clubs';
 
-export default Clubs;
+export { Clubs };

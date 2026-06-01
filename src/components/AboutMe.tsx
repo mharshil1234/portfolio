@@ -29,4 +29,4 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
 
 AboutMe.displayName = 'AboutMe';
 
-export default AboutMe;
+export { AboutMe };

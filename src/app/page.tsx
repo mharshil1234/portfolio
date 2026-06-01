@@ -1,12 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import Navbar from '@/components/Navbar';
-import AboutMe from '@/components/AboutMe';
-import Skills from '@/components/Skills';
-import Clubs from '@/components/Clubs';
-import Projects from '@/components/Projects';
-import ContactMe from '@/components/ContactMe';
+import { Navbar } from '@/components/Navbar';
+import { AboutMe } from '@/components/AboutMe';
+import { Skills } from '@/components/Skills';
+import { Clubs } from '@/components/Clubs';
+import { Projects } from '@/components/Projects';
+import { ContactMe } from '@/components/ContactMe';
 
 export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);

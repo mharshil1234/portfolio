@@ -39,4 +39,4 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
 
 Skills.displayName = 'Skills';
 
-export default Skills;
+export { Skills };

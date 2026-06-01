@@ -85,4 +85,4 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
 
 ContactMe.displayName = 'ContactMe';
 
-export default ContactMe;
+export { ContactMe };

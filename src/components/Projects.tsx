@@ -40,4 +40,4 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
 
 Projects.displayName = 'Projects';
 
-export default Projects;
+export { Projects };
