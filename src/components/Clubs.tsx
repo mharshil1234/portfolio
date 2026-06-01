@@ -1,10 +1,24 @@
 import React, { forwardRef } from 'react';
+import { ClubCard } from './Club/ClubCard';
 
 const Clubs = forwardRef<HTMLElement>((_, ref) => {
   const clubs = [
-    { name: 'Club 1', description: 'Brief description of your involvement' },
-    { name: 'Club 2', description: 'Brief description of your involvement' },
-    { name: 'Club 3', description: 'Brief description of your involvement' },
+    {
+      name: 'CodeChef-VIT',
+      image: '/ccvit.png',
+      description: 'Competitive Programming & Web Development Member. Contributing to project cycles and helped organize and judge a hackathon with 1,000+ participants.',
+      website: 'https://www.codechefvit.com/',
+      github: 'https://github.com/CodeChefVIT',
+      linkedin: 'https://www.linkedin.com/company/codechefvit/',
+    },
+    {
+      name: 'ACM-VIT',
+      image: '/acmvit.png',
+      description: 'Competitive Programming Member. Contributed to organizing coding competitions and workshops, fostering a vibrant programming community on campus.',
+      website: 'https://www.acmvit.in/',
+      github: 'https://github.com/ACM-VIT',
+      linkedin: 'https://www.linkedin.com/company/acmvit/',
+    }
   ];
 
   return (
@@ -12,16 +26,19 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
       ref={ref}
       className="w-full min-h-screen flex items-center justify-center py-20"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12">Clubs & Communities</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Clubs & Communities</h2>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
           {clubs.map((club, index) => (
-            <div
-              key={index}
-              className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <h3 className="text-2xl font-bold mb-3">{club.name}</h3>
-              <p className="text-gray-300">{club.description}</p>
+            <div key={index} className="w-full md:w-96">
+              <ClubCard
+                name={club.name}
+                image={club.image}
+                description={club.description}
+                website={club.website}
+                github={club.github}
+                linkedin={club.linkedin}
+              />
             </div>
           ))}
         </div>

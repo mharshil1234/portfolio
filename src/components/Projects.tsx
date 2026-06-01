@@ -13,7 +13,7 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
       className="w-full min-h-screen flex items-center justify-center py-20"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12">Projects</h2>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <div

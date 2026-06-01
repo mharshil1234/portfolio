@@ -30,8 +30,9 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
       className="w-full min-h-screen flex items-center justify-center py-20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12">Skills</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Skills</h2>
+        <div className="flex justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           {skills.map((skillGroup, index) => (
             <div
               key={index}
@@ -50,6 +51,7 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

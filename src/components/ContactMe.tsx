@@ -7,7 +7,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
       className="w-full min-h-screen flex items-center justify-center py-20"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12">Contact Me</h2>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Contact Me</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Form */}
           <div>
