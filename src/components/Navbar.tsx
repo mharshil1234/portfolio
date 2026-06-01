@@ -58,7 +58,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-fit">
+    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-fit hidden md:flex">
       <div className="bg-gray-900/80 backdrop-blur-md rounded-full shadow-2xl px-8 py-3 border border-gray-700/50">
         <div className="flex justify-center items-center gap-2">
           <button
