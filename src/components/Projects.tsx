@@ -1,12 +1,7 @@
 import React, { forwardRef } from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 const Projects = forwardRef<HTMLElement>((_, ref) => {
-  const projects = [
-    { name: 'Project 1', description: 'A brief description of your project' },
-    { name: 'Project 2', description: 'A brief description of your project' },
-    { name: 'Project 3', description: 'A brief description of your project' },
-  ];
-
   return (
     <section
       ref={ref}
@@ -14,24 +9,22 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow hover:scale-105 transform"
+        <div className="flex flex-col items-center justify-center space-y-8">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-12 rounded-2xl border border-gray-700/50 max-w-2xl w-full text-center">
+            <h3 className="text-3xl font-bold mb-4">Yet to be Displayed</h3>
+            <p className="text-gray-400 mb-8">
+              My projects are coming soon! In the meantime, check out my GitHub profile to see what I've been working on.
+            </p>
+            <a
+              href="https://github.com/mharshil1234"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 px-8 py-3 rounded-lg font-semibold transition-all"
             >
-              <h3 className="text-2xl font-bold mb-3">{project.name}</h3>
-              <p className="text-gray-300 mb-4">{project.description}</p>
-              <div className="flex gap-2">
-                <button className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm transition-colors">
-                  View
-                </button>
-                <button className="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded text-sm transition-colors">
-                  Code
-                </button>
-              </div>
-            </div>
-          ))}
+              <FaGithub className="text-xl" />
+              <span>View on GitHub</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

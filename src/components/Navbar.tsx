@@ -52,7 +52,7 @@ export default function Navbar({
   const getButtonClass = (sectionId: string) => {
     const baseClass = 'px-4 py-2 rounded-2xl transition-all duration-300 font-medium';
     if (activeSection === sectionId) {
-      return `${baseClass} bg-blue-600 text-white shadow-lg shadow-blue-500/30`;
+      return `${baseClass} bg-purple-600 text-white shadow-lg shadow-purple-500/30`;
     }
     return `${baseClass} text-gray-300 hover:text-white hover:bg-gray-700`;
   };
