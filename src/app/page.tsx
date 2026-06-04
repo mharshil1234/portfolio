@@ -16,7 +16,7 @@ export default function Home() {
   const contactRef = useRef<HTMLElement>(null);
 
   return (
-    <div>
+    <div className="page-wrapper">
       <Navbar
         aboutRef={aboutRef}
         skillsRef={skillsRef}
