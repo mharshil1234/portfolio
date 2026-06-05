@@ -14,7 +14,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
             <img
               src="/me.jpeg"
               alt="Harshil Maheshwari"
-              className="w-96 h-96 rounded-full object-cover border-4 border-white/10 shadow-2xl"
+              className="w-full max-w-sm h-auto rounded-full object-cover border-4 border-white/10 shadow-2xl"
             />
           </div>
 
