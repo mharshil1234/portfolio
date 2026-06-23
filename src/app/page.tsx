@@ -7,6 +7,7 @@ import { Skills } from '@/components/Skills';
 import { Clubs } from '@/components/Clubs';
 import { Projects } from '@/components/Projects';
 import { ContactMe } from '@/components/ContactMe';
+import { Footer } from '@/components/Footer';
 
 export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);
@@ -31,6 +32,7 @@ export default function Home() {
         <Projects ref={projectsRef} />
         <ContactMe ref={contactRef} />
       </div>
+      <Footer />
     </div>
   );
 }
