@@ -3,6 +3,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { HMLogo } from "./HMLogo";
 
 const NAME = "Harshil Maheshwari";
 const ROLE = "Full Stack Developer";
@@ -34,7 +35,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
   return (
     <section
       ref={ref}
-      className="w-full min-h-screen flex items-center justify-center"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -67,133 +68,139 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
             </div>
           </motion.div>
 
-          {/* Text */}
-          <div className="max-w-2xl">
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg mb-4"
-            >
-              Hi, I'm
-            </motion.p>
+          <div className="relative max-w-2xl">
 
-            {/* Name */}
-            <h1 className="text-5xl sm:text-7xl font-bold leading-none mb-3">
-              {NAME.split(" ").map((word, wordIndex) => (
-                <span
-                  key={word}
-                  className="inline-block mr-4 whitespace-nowrap"
-                >
-                  {word.split("").map((char, index) => {
-                    const delay =
-                      (NAME.split(" ")
-                        .slice(0, wordIndex)
-                        .join("").length +
-                        index +
-                        wordIndex) *
-                      0.03;
+            <div className="absolute -top-16 left-1/2 -translate-x-1/2 opacity-[0.08] scale-125 pointer-events-none">
+              <HMLogo />
+            </div>
 
-                    return (
-                      <motion.span
-                        key={index}
-                        initial={{
-                          opacity: 0,
-                          y: 20,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-                        transition={{
-                          delay,
-                          duration: 0.25,
-                        }}
-                        className="inline-block"
-                      >
-                        {char}
-                      </motion.span>
-                    );
-                  })}
-                </span>
-              ))}
-            </h1>
+            <div className="relative z-10">
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-lg mb-4"
+              >
+                Hi, I'm
+              </motion.p>
 
-            {/* Typewriter */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="text-xl text-gray-400 mb-6 h-8"
-            >
-              {typedRole}
-              <span className="animate-pulse">|</span>
-            </motion.p>
+              {/* Name */}
+              <h1 className="text-5xl sm:text-7xl font-bold leading-none mb-3">
+                {NAME.split(" ").map((word, wordIndex) => (
+                  <span
+                    key={word}
+                    className="inline-block mr-4 whitespace-nowrap"
+                  >
+                    {word.split("").map((char, index) => {
+                      const delay =
+                        (NAME.split(" ")
+                          .slice(0, wordIndex)
+                          .join("").length +
+                          index +
+                          wordIndex) *
+                        0.03;
 
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="text-lg text-gray-300 leading-relaxed mb-8"
-            >
-              Passionate about building software that solves real problems. I
-              enjoy learning new technologies, exploring ideas and turning them
-              into meaningful projects.
-            </motion.p>
+                      return (
+                        <motion.span
+                          key={index}
+                          initial={{
+                            opacity: 0,
+                            y: 20,
+                          }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                          }}
+                          transition={{
+                            delay,
+                            duration: 0.25,
+                          }}
+                          className="inline-block"
+                        >
+                          {char}
+                        </motion.span>
+                      );
+                    })}
+                  </span>
+                ))}
+              </h1>
 
-            {/* Socials */}
-            <div className="flex gap-6">
-              {[
-                {
-                  icon: <FaGithub size={28} />,
-                  href: "https://github.com/mharshil1234",
-                },
-                {
-                  icon: <FaLinkedin size={28} />,
-                  href: "https://www.linkedin.com/in/harshil-maheshwari/",
-                },
-                {
-                  icon: <FaEnvelope size={28} />,
-                  href: "mailto:mharshil1234@gmail.com",
-                },
-              ].map((item, index) => (
-                <motion.a
-                  key={index}
-                  href={item.href}
-                  target={item.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    item.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  initial={{
-                    opacity: 0,
-                    scale: 0.5,
-                    y: 10,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    delay: 1.4 + index * 0.15,
-                    duration: 0.3,
-                  }}
-                  whileHover={{
-                    y: -4,
-                    scale: 1.15,
-                  }}
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-white"
-                >
-                  {item.icon}
-                </motion.a>
-              ))}
+              {/* Typewriter */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="text-xl text-gray-400 mb-6 h-8"
+              >
+                {typedRole}
+                <span className="animate-pulse">|</span>
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+                className="text-lg text-gray-300 leading-relaxed mb-8"
+              >
+                Passionate about building software that solves real problems. I
+                enjoy learning new technologies, exploring ideas and turning them
+                into meaningful projects.
+              </motion.p>
+
+              {/* Socials */}
+              <div className="flex gap-6">
+                {[
+                  {
+                    icon: <FaGithub size={28} />,
+                    href: "https://github.com/mharshil1234",
+                  },
+                  {
+                    icon: <FaLinkedin size={28} />,
+                    href: "https://www.linkedin.com/in/harshil-maheshwari/",
+                  },
+                  {
+                    icon: <FaEnvelope size={28} />,
+                    href: "mailto:mharshil1234@gmail.com",
+                  },
+                ].map((item, index) => (
+                  <motion.a
+                    key={index}
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    initial={{
+                      opacity: 0,
+                      scale: 0.5,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: 1.4 + index * 0.15,
+                      duration: 0.3,
+                    }}
+                    whileHover={{
+                      y: -4,
+                      scale: 1.15,
+                    }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center text-white"
+                  >
+                    {item.icon}
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 });
 
