@@ -1,10 +1,48 @@
 'use client';
 
 import React, { forwardRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { Toast } from './Toast';
 import { sendEmail } from '@/lib/actions/send-email';
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const col = {
+  hidden: {
+    opacity: 0,
+    x: -40,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
+const colRight = {
+  hidden: {
+    opacity: 0,
+    x: 40,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const ContactMe = forwardRef<HTMLElement>((_, ref) => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -52,10 +90,23 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
         duration={4000}
       />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Contact Me</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Contact Form */}
-          <div>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl sm:text-5xl font-bold mb-12 text-center"
+        >
+          Contact Me
+        </motion.h2>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          <motion.div variants={col}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Name</label>
@@ -100,10 +151,9 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                 {loading ? 'Sending...' : 'Send Message'}
               </button>
             </form>
-          </div>
+          </motion.div>
 
-          {/* Contact Information */}
-          <div className="flex flex-col justify-center space-y-6">
+          <motion.div variants={colRight} className="flex flex-col justify-center space-y-6">
             <div>
               <h3 className="text-2xl font-bold mb-4">Get in Touch</h3>
               <p className="text-gray-300 mb-6">
@@ -147,8 +197,8 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                 </div>
               </a>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
 
 const Projects = forwardRef<HTMLElement>((_, ref) => {
@@ -8,8 +9,22 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
       className="w-full min-h-screen flex items-center justify-center py-20"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center">Projects</h2>
-        <div className="flex flex-col items-center justify-center space-y-8">
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl sm:text-5xl font-bold mb-12 text-center"
+        >
+          Projects
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex flex-col items-center justify-center space-y-8"
+        >
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-12 rounded-2xl border border-gray-700/50 max-w-2xl w-full text-center">
             <h3 className="text-3xl font-bold mb-4">Yet to be Displayed</h3>
             <p className="text-gray-400 mb-8">
@@ -25,7 +40,7 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
               <span>View on GitHub</span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
