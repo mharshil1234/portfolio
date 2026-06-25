@@ -4,6 +4,8 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { HMLogo } from "./HMLogo";
+import { ShatterPhoto } from "./ShatterPhoto";
+import { ScrambleText } from "./ScrambleText";
 
 const NAME = "Harshil Maheshwari";
 const ROLE = "Full Stack Developer";
@@ -12,7 +14,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
   const [typedRole, setTypedRole] = useState("");
 
   useEffect(() => {
-    const totalNameDuration = NAME.length * 30 + 300;
+    const totalNameDuration = 1400;
 
     const startTyping = setTimeout(() => {
       let index = 0;
@@ -41,31 +43,12 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Photo */}
           <motion.div
-            initial={{
-              clipPath: "circle(0% at 50% 50%)",
-              scale: 0.8,
-              opacity: 0,
-            }}
-            animate={{
-              clipPath: "circle(75% at 50% 50%)",
-              scale: 1,
-              opacity: 1,
-            }}
-            transition={{
-              duration: 1.2,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
             className="flex items-center justify-center"
           >
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-white/5 blur-3xl scale-110" />
-
-              <img
-                src="/me.jpeg"
-                alt="Harshil Maheshwari"
-                className="relative w-full max-w-sm h-auto rounded-full object-cover border-4 border-white/10 shadow-2xl"
-              />
-            </div>
+            <ShatterPhoto />
           </motion.div>
 
           <div className="relative max-w-2xl">
@@ -85,42 +68,10 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
               </motion.p>
 
               {/* Name */}
-              <h1 className="text-5xl sm:text-7xl font-bold leading-none mb-3">
-                {NAME.split(" ").map((word, wordIndex) => (
-                  <span
-                    key={word}
-                    className="inline-block mr-4 whitespace-nowrap"
-                  >
-                    {word.split("").map((char, index) => {
-                      const delay =
-                        (NAME.split(" ")
-                          .slice(0, wordIndex)
-                          .join("").length +
-                          index +
-                          wordIndex) *
-                        0.03;
-
-                      return (
-                        <motion.span
-                          key={index}
-                          initial={{
-                            opacity: 0,
-                            y: 20,
-                          }}
-                          animate={{
-                            opacity: 1,
-                            y: 0,
-                          }}
-                          transition={{
-                            delay,
-                            duration: 0.25,
-                          }}
-                          className="inline-block"
-                        >
-                          {char}
-                        </motion.span>
-                      );
-                    })}
+              <h1 className="text-5xl sm:text-7xl font-bold leading-none mb-3 tracking-wide">
+                {NAME.split(" ").map((word, i) => (
+                  <span key={i} className="block">
+                    <ScrambleText text={word} />
                   </span>
                 ))}
               </h1>
@@ -129,7 +80,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 1.4 }}
                 className="text-xl text-gray-400 mb-6 h-8"
               >
                 {typedRole}
@@ -139,7 +90,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
+                transition={{ delay: 1.8 }}
                 className="text-lg text-gray-300 leading-relaxed mb-8"
               >
                 Passionate about building software that solves real problems. I
@@ -183,7 +134,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                       y: 0,
                     }}
                     transition={{
-                      delay: 1.4 + index * 0.15,
+                      delay: 2.0 + index * 0.15,
                       duration: 0.3,
                     }}
                     whileHover={{
