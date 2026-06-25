@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react";
 import { motion, type Variants } from "framer-motion";
+import { TransitionDots } from "./TransitionDots";
 
 const container = {
     hidden: {},
@@ -60,6 +61,8 @@ const getPillVariants = (index: number): Variants => ({
     },
 });
 
+
+
 const Skills = forwardRef<HTMLElement>((_, ref) => {
     const skills = [
         { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"] },
@@ -72,20 +75,23 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
     return (
         <section
             ref={ref}
-            className="w-full min-h-screen flex items-center justify-center py-20"
+            className="w-full min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-4xl sm:text-5xl font-bold mb-12 text-center"
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+                <div className="relative mb-12">
+                    <TransitionDots />
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-4xl sm:text-5xl font-bold text-center"
                 >
                     <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
                         Skills
                     </span>
                 </motion.h2>
+                </div>
 
                 <div className="flex justify-center" style={{ perspective: "1200px" }}>
                     <motion.div
@@ -100,8 +106,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                 key={groupIndex}
                                 variants={card}
                                 whileHover={{
-                                    y: -8,
-                                    scale: 1.02,
+                                    y: -3,
+                                    scale: 1.01,
                                     transition: { duration: 0.3 },
                                 }}
                                 className="group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] p-6 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-purple-500/5 transition-all duration-500 relative overflow-hidden"
@@ -133,8 +139,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                                     key={skill}
                                                     variants={getPillVariants(globalIdx)}
                                                     whileHover={{
-                                                        scale: 1.15,
-                                                        y: -3,
+                                                        scale: 1.06,
+                                                        y: -1,
                                                         backgroundColor: "rgba(168,85,247,0.2)",
                                                         borderColor: "rgba(168,85,247,0.3)",
                                                         transition: { type: "spring", stiffness: 400, damping: 10 },

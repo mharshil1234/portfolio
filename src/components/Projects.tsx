@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
+import { TransitionDots } from './TransitionDots';
 
 const container: Variants = {
     hidden: {},
@@ -32,17 +33,20 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
             </div>
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-                <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-4xl sm:text-5xl font-bold mb-12 text-center"
-                >
-                    <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
-                        Projects
-                    </span>
-                </motion.h2>
+                <div className="relative mb-12">
+                    <TransitionDots />
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-4xl sm:text-5xl font-bold text-center"
+                    >
+                        <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
+                            Projects
+                        </span>
+                    </motion.h2>
+                </div>
 
                 <motion.div
                     variants={container}

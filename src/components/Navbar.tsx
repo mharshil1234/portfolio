@@ -71,7 +71,7 @@ export default function Navbar({
       initial={{ y: 0 }}
       animate={{ y: hidden ? -120 : 0 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6"
+      className="fixed top-0 left-0 right-0 z-50 hidden md:flex justify-center pt-6"
     >
       <motion.div
         animate={{
