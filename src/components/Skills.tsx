@@ -65,11 +65,10 @@ const getPillVariants = (index: number): Variants => ({
 
 const Skills = forwardRef<HTMLElement>((_, ref) => {
     const skills = [
-        { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"] },
-        { category: "Backend", items: ["Node.js", "Express.js"] },
-        { category: "Databases", items: ["Redis", "MongoDB", "PostgreSQL"] },
-        { category: "Programming Languages", items: ["JavaScript", "TypeScript", "Java", "C++"] },
-        { category: "Tools & Platforms", items: ["Docker", "Git", "Linux"] },
+        { category: "Languages", items: ["Java", "C++", "JavaScript", "TypeScript", "Python"] },
+        { category: "Frontend", items: ["React", "Next.js", "Vite", "Tailwind CSS", "HTML", "CSS"] },
+        { category: "Backend", items: ["Node.js", "Express.js", "PostgreSQL", "MongoDB", "Redis", "Prisma", "Supabase"] },
+        { category: "Tools & DevOps", items: ["Git", "Docker", "Linux", "Bash", "Vercel", "VS Code"] },
     ];
 
     return (
@@ -139,10 +138,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                                     key={skill}
                                                     variants={getPillVariants(globalIdx)}
                                                     whileHover={{
-                                                        scale: 1.06,
+                                                        scale: 1.04,
                                                         y: -1,
-                                                        backgroundColor: "rgba(168,85,247,0.2)",
-                                                        borderColor: "rgba(168,85,247,0.3)",
                                                         transition: { type: "spring", stiffness: 400, damping: 10 },
                                                     }}
                                                     whileTap={{ scale: 0.95 }}

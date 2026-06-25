@@ -56,7 +56,7 @@ export function Footer() {
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                     >
-                        <IoHeartSharp className="text-red-400" />
+                        <IoHeartSharp className="text-purple-400" />
                     </motion.span>
                 </motion.span>
 

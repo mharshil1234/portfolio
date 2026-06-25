@@ -166,8 +166,8 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                     viewport={{ once: true, amount: 0.2 }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
-                    <motion.div variants={col}>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    <motion.div variants={col} className="h-full">
+                        <form onSubmit={handleSubmit} className="h-full flex flex-col space-y-6">
                             {fields.map((field) => {
                                 const isFocused = focused === field.name;
                                 const hasValue = formData[field.name as keyof typeof formData].length > 0;
@@ -176,8 +176,8 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                         <motion.label
                                             htmlFor={field.name}
                                             animate={{
-                                                y: isFocused || hasValue ? -24 : 0,
-                                                scale: isFocused || hasValue ? 0.85 : 1,
+                                                y: isFocused || hasValue ? -32 : 0,
+                                                scale: isFocused || hasValue ? 0.8 : 1,
                                                 color: isFocused ? '#a855f7' : 'rgba(255,255,255,0.5)',
                                             }}
                                             transition={{ duration: 0.2 }}
@@ -208,12 +208,12 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                 );
                             })}
 
-                            <div className="relative">
+                            <div className="relative flex flex-col flex-1">
                                 <motion.label
                                     htmlFor="message"
                                     animate={{
-                                        y: focused === 'message' || formData.message.length > 0 ? -24 : 0,
-                                        scale: focused === 'message' || formData.message.length > 0 ? 0.85 : 1,
+                                                y: focused === 'message' || formData.message.length > 0 ? -32 : 0,
+                                                scale: focused === 'message' || formData.message.length > 0 ? 0.8 : 1,
                                         color: focused === 'message' ? '#a855f7' : 'rgba(255,255,255,0.5)',
                                     }}
                                     transition={{ duration: 0.2 }}
@@ -229,7 +229,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     onFocus={() => setFocused('message')}
                                     onBlur={() => setFocused(null)}
                                     required
-                                    className="w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white outline-none transition-all duration-300 h-32 resize-none"
+                                    className="w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white outline-none transition-all duration-300 flex-1 resize-none"
                                     style={{
                                         borderColor: focused === 'message'
                                             ? 'rgba(168,85,247,0.5)'
