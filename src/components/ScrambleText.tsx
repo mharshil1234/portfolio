@@ -21,8 +21,6 @@ export function ScrambleText({ text }: { text: string }) {
             const points: { x: number; y: number }[] = [];
             const vw = window.innerWidth;
             const vh = window.innerHeight;
-            const margin = 0.6;
-
             for (let i = 0; i < text.length; i++) {
                 const span = el.children[i] as HTMLSpanElement | undefined;
                 const rect = span?.getBoundingClientRect();
@@ -30,8 +28,8 @@ export function ScrambleText({ text }: { text: string }) {
                 const y = rect?.top ?? 0;
                 positions.push({ char: text[i], x, y });
                 points.push({
-                    x: -margin * vw + Math.random() * vw * (1 + 2 * margin),
-                    y: -margin * vh + Math.random() * vh * (1 + 2 * margin),
+                    x: Math.random() * vw,
+                    y: Math.random() * vh,
                 });
             }
             setChars(positions);
