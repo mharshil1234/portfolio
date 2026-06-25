@@ -1,6 +1,7 @@
 'use client';
 
-import React, { RefObject, useState, useEffect } from 'react';
+import React, { RefObject, useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavbarProps {
   aboutRef: RefObject<HTMLElement | null>;
@@ -18,9 +19,17 @@ export default function Navbar({
   contactRef,
 }: NavbarProps) {
   const [activeSection, setActiveSection] = useState('about');
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScroll = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
+      const current = window.scrollY;
+      setScrolled(current > 50);
+      setHidden(current > lastScroll.current && current > 200);
+      lastScroll.current = current;
+
       const sections = [
         { id: 'about', ref: aboutRef },
         { id: 'skills', ref: skillsRef },
@@ -33,7 +42,7 @@ export default function Navbar({
         const element = section.ref.current;
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
+          if (rect.top <= 200 && rect.bottom >= 200) {
             setActiveSection(section.id);
             break;
           }
@@ -41,7 +50,7 @@ export default function Navbar({
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [aboutRef, skillsRef, clubsRef, projectsRef, contactRef]);
 
@@ -49,51 +58,63 @@ export default function Navbar({
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const getButtonClass = (sectionId: string) => {
-    const baseClass = 'px-4 py-2 rounded-2xl transition-all duration-300 font-medium';
-    if (activeSection === sectionId) {
-      return `${baseClass} bg-purple-600 text-white shadow-lg shadow-purple-500/30`;
-    }
-    return `${baseClass} text-gray-300 hover:text-white hover:bg-gray-700`;
-  };
+  const sections = [
+    { id: 'about', label: 'About Me', ref: aboutRef },
+    { id: 'skills', label: 'Skills', ref: skillsRef },
+    { id: 'clubs', label: 'Clubs', ref: clubsRef },
+    { id: 'projects', label: 'Projects', ref: projectsRef },
+    { id: 'contact', label: 'Contact', ref: contactRef },
+  ];
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-fit hidden md:flex">
-      <div className="bg-gray-900/80 backdrop-blur-md rounded-full shadow-2xl px-8 py-3 border border-gray-700/50">
-        <div className="flex justify-center items-center gap-2">
-          <button
-            onClick={() => scrollToSection(aboutRef)}
-            className={getButtonClass('about')}
-          >
-            About Me
-          </button>
-          <button
-            onClick={() => scrollToSection(skillsRef)}
-            className={getButtonClass('skills')}
-          >
-            Skills
-          </button>
-          <button
-            onClick={() => scrollToSection(clubsRef)}
-            className={getButtonClass('clubs')}
-          >
-            Clubs
-          </button>
-          <button
-            onClick={() => scrollToSection(projectsRef)}
-            className={getButtonClass('projects')}
-          >
-            Projects
-          </button>
-          <button
-            onClick={() => scrollToSection(contactRef)}
-            className={getButtonClass('contact')}
-          >
-            Contact
-          </button>
-        </div>
-      </div>
-    </nav>
+    <motion.nav
+      initial={{ y: 0 }}
+      animate={{ y: hidden ? -120 : 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6"
+    >
+      <motion.div
+        animate={{
+          backgroundColor: scrolled
+            ? 'rgba(17, 0, 34, 0.85)'
+            : 'rgba(17, 0, 34, 0.4)',
+          backdropFilter: scrolled ? 'blur(20px)' : 'blur(8px)',
+          borderColor: scrolled
+            ? 'rgba(168, 85, 247, 0.2)'
+            : 'rgba(255,255,255,0.06)',
+          boxShadow: scrolled
+            ? '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.1)'
+            : '0 4px 16px rgba(0,0,0,0.2)',
+        }}
+        transition={{ duration: 0.4 }}
+        className="rounded-full px-5 py-2 border flex items-center gap-1"
+      >
+        {sections.map((s) => {
+          const isActive = activeSection === s.id;
+          return (
+            <motion.button
+              key={s.id}
+              onClick={() => scrollToSection(s.ref)}
+              layout
+              className="relative px-4 py-2 rounded-full text-sm font-medium transition-colors"
+              style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.5)' }}
+              whileHover={{ color: '#fff' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="nav-pill"
+                  className="absolute inset-0 rounded-full bg-purple-600"
+                  style={{ boxShadow: '0 0 20px rgba(168,85,247,0.3)' }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{s.label}</span>
+            </motion.button>
+          );
+        })}
+      </motion.div>
+    </motion.nav>
   );
 }
 

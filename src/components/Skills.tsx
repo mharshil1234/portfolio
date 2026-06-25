@@ -5,21 +5,25 @@ const container = {
     hidden: {},
     visible: {
         transition: {
-            staggerChildren: 0.15,
+            staggerChildren: 0.12,
         },
     },
 };
 
-const card = {
+const card: Variants = {
     hidden: {
         opacity: 0,
-        y: 40,
+        y: 60,
+        rotateX: 15,
+        perspective: 1000,
     },
     visible: {
         opacity: 1,
         y: 0,
+        rotateX: 0,
         transition: {
-            duration: 0.5,
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
         },
     },
 };
@@ -36,13 +40,10 @@ const pillContainer = {
 const getPillVariants = (index: number): Variants => ({
     hidden: {
         opacity: 0,
-        scale: 0.4,
-        x:
-            index % 2 === 0
-                ? -160 - (index % 5) * 30
-                : 160 + (index % 5) * 30,
-        y: 80 + (index % 4) * 20,
-        rotate: index % 2 === 0 ? -20 : 20,
+        scale: 0.3,
+        x: index % 2 === 0 ? -120 - (index % 5) * 20 : 120 + (index % 5) * 20,
+        y: 60 + (index % 4) * 15,
+        rotate: index % 2 === 0 ? -15 : 15,
     },
     visible: {
         opacity: 1,
@@ -50,37 +51,22 @@ const getPillVariants = (index: number): Variants => ({
         x: 0,
         y: 0,
         rotate: 0,
-            transition: {
-                type: "spring" as "spring",
-                stiffness: 80 + (index % 3) * 20,
-                damping: 10 + (index % 3) * 2,
-                mass: 0.7 + (index % 3) * 0.1,
-            },
+        transition: {
+            type: "spring" as const,
+            stiffness: 100 + (index % 3) * 30,
+            damping: 12 + (index % 3) * 2,
+            mass: 0.6 + (index % 3) * 0.1,
+        },
     },
 });
 
 const Skills = forwardRef<HTMLElement>((_, ref) => {
     const skills = [
-        {
-            category: "Frontend",
-            items: ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"],
-        },
-        {
-            category: "Backend",
-            items: ["Node.js", "Express.js"],
-        },
-        {
-            category: "Databases",
-            items: ["Redis", "MongoDB", "PostgreSQL"],
-        },
-        {
-            category: "Programming Languages",
-            items: ["JavaScript", "TypeScript", "Java", "C++"],
-        },
-        {
-            category: "Tools & Platforms",
-            items: ["Docker", "Git", "Linux"],
-        },
+        { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"] },
+        { category: "Backend", items: ["Node.js", "Express.js"] },
+        { category: "Databases", items: ["Redis", "MongoDB", "PostgreSQL"] },
+        { category: "Programming Languages", items: ["JavaScript", "TypeScript", "Java", "C++"] },
+        { category: "Tools & Platforms", items: ["Docker", "Git", "Linux"] },
     ];
 
     return (
@@ -96,10 +82,12 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                     transition={{ duration: 0.6 }}
                     className="text-4xl sm:text-5xl font-bold mb-12 text-center"
                 >
-                    Skills
+                    <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
+                        Skills
+                    </span>
                 </motion.h2>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center" style={{ perspective: "1200px" }}>
                     <motion.div
                         variants={container}
                         initial="hidden"
@@ -112,48 +100,54 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                 key={groupIndex}
                                 variants={card}
                                 whileHover={{
-                                    y: -5,
-                                    transition: { duration: 0.2 },
+                                    y: -8,
+                                    scale: 1.02,
+                                    transition: { duration: 0.3 },
                                 }}
-                                className="bg-gray-800/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg hover:shadow-2xl"
+                                className="group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] p-6 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-purple-500/5 transition-all duration-500 relative overflow-hidden"
                             >
-                                <h3 className="text-2xl font-bold mb-6">
-                                    {skillGroup.category}
-                                </h3>
+                                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+                                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                <motion.div
-                                    variants={pillContainer}
-                                    className="flex flex-wrap gap-3"
-                                >
-                                    {skillGroup.items.map((skill, i) => {
-                                        const globalIdx =
-                                            skills
+                                <div className="relative z-10">
+                                    <motion.h3
+                                        className="text-2xl font-bold mb-6"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: groupIndex * 0.1 }}
+                                    >
+                                        {skillGroup.category}
+                                    </motion.h3>
+
+                                    <motion.div
+                                        variants={pillContainer}
+                                        className="flex flex-wrap gap-3"
+                                    >
+                                        {skillGroup.items.map((skill, i) => {
+                                            const globalIdx = skills
                                                 .slice(0, groupIndex)
-                                                .reduce(
-                                                    (s, g) =>
-                                                        s + g.items.length,
-                                                    0
-                                                ) + i;
-                                        return (
-                                            <motion.span
-                                                key={skill}
-                                                variants={getPillVariants(
-                                                    globalIdx
-                                                )}
-                                                whileHover={{
-                                                    scale: 1.1,
-                                                    y: -2,
-                                                }}
-                                                whileTap={{
-                                                    scale: 0.95,
-                                                }}
-                                                className="px-4 py-2 bg-white/10 border border-white/10 text-gray-200 rounded-full text-sm font-medium cursor-pointer"
-                                            >
-                                                {skill}
-                                            </motion.span>
-                                        );
-                                    })}
-                                </motion.div>
+                                                .reduce((s, g) => s + g.items.length, 0) + i;
+                                            return (
+                                                <motion.span
+                                                    key={skill}
+                                                    variants={getPillVariants(globalIdx)}
+                                                    whileHover={{
+                                                        scale: 1.15,
+                                                        y: -3,
+                                                        backgroundColor: "rgba(168,85,247,0.2)",
+                                                        borderColor: "rgba(168,85,247,0.3)",
+                                                        transition: { type: "spring", stiffness: 400, damping: 10 },
+                                                    }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    className="px-4 py-2 bg-white/[0.06] border border-white/[0.08] text-gray-200 rounded-full text-sm font-medium cursor-pointer backdrop-blur-sm transition-colors duration-300"
+                                                >
+                                                    {skill}
+                                                </motion.span>
+                                            );
+                                        })}
+                                    </motion.div>
+                                </div>
                             </motion.div>
                         ))}
                     </motion.div>

@@ -1,94 +1,107 @@
 import React, { forwardRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { ClubCard } from './Club/ClubCard';
 
 const container = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.25,
+        },
     },
-  },
 };
 
-const card = {
-  hidden: {
-    opacity: 0,
-    y: 40,
-    scale: 0.95,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
+const cardLeft: Variants = {
+    hidden: { opacity: 0, x: -80, rotateY: 10 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
     },
-  },
+};
+
+const cardRight: Variants = {
+    hidden: { opacity: 0, x: 80, rotateY: -10 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
 };
 
 const Clubs = forwardRef<HTMLElement>((_, ref) => {
-  const clubs = [
-    {
-      name: 'CodeChef-VIT',
-      image: '/ccvit.png',
-      description: 'Competitive Programming & Web Development Member. Contributing to project cycles and helped organize and judge a hackathon with 1,000+ participants.',
-      website: 'https://www.codechefvit.com/',
-      github: 'https://github.com/CodeChefVIT',
-      linkedin: 'https://www.linkedin.com/company/codechefvit/',
-    },
-    {
-      name: 'ACM-VIT',
-      image: '/acmvit.png',
-      description: 'Competitive Programming Member. Contributed to organizing coding competitions and workshops, fostering a vibrant programming community on campus.',
-      website: 'https://www.acmvit.in/',
-      github: 'https://github.com/ACM-VIT',
-      linkedin: 'https://www.linkedin.com/company/acmvit/',
-    }
-  ];
+    const clubs = [
+        {
+            name: 'CodeChef-VIT',
+            image: '/ccvit.png',
+            description: 'Competitive Programming & Web Development Member. Contributing to project cycles and helped organize and judge a hackathon with 1,000+ participants.',
+            website: 'https://www.codechefvit.com/',
+            github: 'https://github.com/CodeChefVIT',
+            linkedin: 'https://www.linkedin.com/company/codechefvit/',
+        },
+        {
+            name: 'ACM-VIT',
+            image: '/acmvit.png',
+            description: 'Competitive Programming Member. Contributed to organizing coding competitions and workshops, fostering a vibrant programming community on campus.',
+            website: 'https://www.acmvit.in/',
+            github: 'https://github.com/ACM-VIT',
+            linkedin: 'https://www.linkedin.com/company/acmvit/',
+        }
+    ];
 
-  return (
-    <section
-      ref={ref}
-      className="w-full min-h-screen flex items-center justify-center py-20"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-bold mb-12 text-center"
+    return (
+        <section
+            ref={ref}
+            className="w-full min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
         >
-          Clubs & Communities
-        </motion.h2>
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-col md:flex-row justify-center items-center gap-8"
-        >
-          {clubs.map((club, index) => (
-            <motion.div
-              key={index}
-              variants={card}
-              className="w-full md:w-96"
-            >
-              <ClubCard
-                name={club.name}
-                image={club.image}
-                description={club.description}
-                website={club.website}
-                github={club.github}
-                linkedin={club.linkedin}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-0 w-72 h-72 bg-purple-600/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-cyan-600/5 rounded-full blur-3xl" />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+                <motion.h2
+                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-4xl sm:text-5xl font-bold mb-12 text-center"
+                >
+                    <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
+                        Clubs & Communities
+                    </span>
+                </motion.h2>
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="flex flex-col md:flex-row justify-center items-center gap-8"
+                >
+                    {clubs.map((club, index) => (
+                        <motion.div
+                            key={index}
+                            variants={index === 0 ? cardLeft : cardRight}
+                            className="w-full md:w-96"
+                            style={{ perspective: "1000px" }}
+                        >
+                            <ClubCard
+                                name={club.name}
+                                image={club.image}
+                                description={club.description}
+                                website={club.website}
+                                github={club.github}
+                                linkedin={club.linkedin}
+                            />
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
+        </section>
+    );
 });
 
 Clubs.displayName = 'Clubs';
