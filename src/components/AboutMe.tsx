@@ -5,8 +5,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion, type Variants } from "framer-motion";
 import { HMLogo } from "./HMLogo";
 import { ShatterPhoto } from "./ShatterPhoto";
-import { ScrambleText } from "./ScrambleText";
-import { TransitionDots } from "./TransitionDots";
+
 
 const NAME = "Harshil Maheshwari";
 const ROLE = "Full Stack Developer";
@@ -59,7 +58,6 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <TransitionDots />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
                     {/* Photo */}
                     <motion.div
@@ -92,13 +90,18 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                             </motion.p>
 
                             {/* Name */}
-                            <h1 className="text-5xl sm:text-7xl font-bold leading-none mb-3 tracking-wide">
+                            <motion.h1
+                                initial={{ opacity: 0, x: 100 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                                className="text-5xl sm:text-7xl font-bold leading-none mb-3 tracking-wide"
+                            >
                                 {NAME.split(" ").map((word, i) => (
                                     <span key={i} className="block">
-                                        <ScrambleText text={word} />
+                                        {word}
                                     </span>
                                 ))}
-                            </h1>
+                            </motion.h1>
 
                             {/* Typewriter */}
                             <motion.p

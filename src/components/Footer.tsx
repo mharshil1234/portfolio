@@ -47,18 +47,10 @@ export function Footer() {
 
                 <div />
 
-                <motion.span
-                    className="flex justify-center items-center gap-1.5 text-sm tracking-wide text-center whitespace-nowrap"
-                    whileHover={{ scale: 1.05 }}
-                >
+                <span className="flex justify-center items-center gap-1.5 text-sm tracking-wide text-center whitespace-nowrap">
                     Made With
-                    <motion.span
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                        <IoHeartSharp className="text-purple-400" />
-                    </motion.span>
-                </motion.span>
+                    <IoHeartSharp className="text-purple-400" />
+                </span>
 
                 <div className="flex justify-end">
                     <AnimatePresence>

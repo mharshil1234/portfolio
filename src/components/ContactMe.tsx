@@ -5,7 +5,7 @@ import { motion, type Variants } from 'framer-motion';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { Toast } from './Toast';
-import { TransitionDots } from './TransitionDots';
+
 import { sendEmail } from '@/lib/actions/send-email';
 
 const container = {
@@ -146,7 +146,6 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
             />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
                 <div className="relative mb-12">
-                    <TransitionDots />
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
