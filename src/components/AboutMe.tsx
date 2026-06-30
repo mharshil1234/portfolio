@@ -71,12 +71,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
 
                     <div className="relative max-w-2xl">
                         <div className="absolute -top-16 left-1/2 -translate-x-1/2 opacity-[0.08] scale-125 pointer-events-none">
-                            <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                            >
-                                <HMLogo />
-                            </motion.div>
+                            <HMLogo />
                         </div>
 
                         <div className="relative z-10">
