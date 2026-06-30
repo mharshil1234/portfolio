@@ -269,12 +269,13 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                         <div className="space-y-4">
                             {[
                                 {
-                                    icon: <HiOutlineMail                                 className="text-2xl text-purple-400/70 flex-shrink-0" />,
+                                    icon: <HiOutlineMail className="text-2xl text-purple-400/70 flex-shrink-0" />,
                                     title: 'Email',
                                     value: 'mharshil1234@gmail.com',
                                     href: 'mailto:mharshil1234@gmail.com',
                                     borderHover: 'hover:border-purple-600/50',
                                     shadowHover: 'hover:shadow-purple-900/30',
+                                    leftBorder: 'border-l-purple-600/50',
                                 },
                                 {
                                     icon: <FaLinkedin className="text-2xl text-blue-400 flex-shrink-0" />,
@@ -283,6 +284,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     href: 'https://www.linkedin.com/in/harshil-maheshwari/',
                                     borderHover: 'hover:border-blue-600',
                                     shadowHover: 'hover:shadow-blue-900/50',
+                                    leftBorder: 'border-l-blue-600',
                                 },
                                 {
                                     icon: <FaGithub className="text-2xl text-gray-300 flex-shrink-0" />,
@@ -291,6 +293,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     href: 'https://github.com/mharshil1234',
                                     borderHover: 'hover:border-gray-600',
                                     shadowHover: 'hover:shadow-gray-800/50',
+                                    leftBorder: 'border-l-gray-600',
                                 },
                             ].map((item, i) => (
                                 <motion.a
@@ -303,7 +306,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.4 + i * 0.15, duration: 0.4 }}
                                     whileHover={{ x: 8 }}
-                                    className={`flex items-center space-x-4 p-4 bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/[0.06] ${item.borderHover} transition-all duration-300 ${item.shadowHover} hover:shadow-lg group`}
+                                    className={`flex items-center space-x-4 p-4 bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/[0.06] border-l-2 ${item.leftBorder} ${item.borderHover} transition-all duration-300 ${item.shadowHover} hover:shadow-lg group`}
                                 >
                                     <motion.div
                                         whileHover={{ scale: 1.2, rotate: 5 }}

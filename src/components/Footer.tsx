@@ -49,7 +49,7 @@ export function Footer() {
 
                 <span className="flex justify-center items-center gap-1.5 text-sm tracking-wide text-center whitespace-nowrap">
                     Made With
-                    <IoHeartSharp className="text-purple-400" />
+                    <IoHeartSharp />
                 </span>
 
                 <div className="flex justify-end">

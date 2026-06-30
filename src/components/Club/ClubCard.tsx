@@ -24,6 +24,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
     const [rotateY, setRotateY] = useState(0);
     const [glowX, setGlowX] = useState(50);
     const [glowY, setGlowY] = useState(50);
+    const [hovered, setHovered] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent) => {
         const card = cardRef.current;
@@ -39,35 +40,39 @@ const ClubCard: React.FC<ClubCardProps> = ({
         setGlowY((y / rect.height) * 100);
     };
 
+    const handleMouseEnter = () => setHovered(true);
+
     const handleMouseLeave = () => {
         setRotateX(0);
         setRotateY(0);
         setGlowX(50);
         setGlowY(50);
+        setHovered(false);
     };
 
     return (
         <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             style={{
-                transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${hovered ? -8 : 0}px)`,
                 transformStyle: "preserve-3d",
+                transition: "transform 0.2s ease",
             }}
-            whileHover={{ y: -8 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group hover:border-white/[0.12] transition-colors duration-500"
+            className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
         >
             <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute inset-0 transition-opacity duration-500"
                 style={{
+                    opacity: hovered ? 1 : 0,
                     background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(168,85,247,0.07) 0%, transparent 60%)`,
                 }}
             />
             <div
-                className="absolute -inset-1 bg-gradient-to-r from-purple-600/5 to-cyan-400/5 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ transform: "translateZ(-10px)" }}
+                className="absolute -inset-1 bg-gradient-to-r from-purple-600/5 to-cyan-400/5 rounded-xl blur-xl transition-opacity duration-500"
+                style={{ transform: "translateZ(-10px)", opacity: hovered ? 1 : 0 }}
             />
 
             <div className="relative z-10 flex flex-col items-center text-center" style={{ transformStyle: "preserve-3d" }}>
