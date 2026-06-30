@@ -53,12 +53,20 @@ function RippleButton({
         setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== id)), 600);
     };
 
+    const handleHover = (e: React.MouseEvent<HTMLButtonElement>, isEnter: boolean) => {
+        if (loading) return;
+        e.currentTarget.style.backgroundColor = isEnter ? '#2F363D' : '#24292F';
+    };
+
     return (
         <button
             type="submit"
             disabled={loading}
             onClick={handleClick}
-            className="relative overflow-hidden w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed px-6 py-3 rounded-lg font-semibold transition-all hover:cursor-pointer"
+            onMouseEnter={(e) => handleHover(e, true)}
+            onMouseLeave={(e) => handleHover(e, false)}
+            className="relative overflow-hidden w-full px-5 py-2.5 rounded-lg text-sm font-semibold transition-all disabled:cursor-not-allowed hover:cursor-pointer"
+            style={{ backgroundColor: '#24292F', border: '1px solid #3A4048', color: 'white' }}
         >
             {ripples.map((r) => (
                 <span
@@ -133,8 +141,8 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
             className="w-full min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
         >
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-purple-600/5 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-cyan-600/5 rounded-full blur-3xl" />
+                <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-purple-600/3 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-cyan-600/3 rounded-full blur-3xl" />
             </div>
 
             <Toast
@@ -153,9 +161,8 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                         transition={{ duration: 0.6 }}
                         className="text-4xl sm:text-5xl font-bold text-center"
                     >
-                        <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
-                            Contact Me
-                        </span>
+                        <span className="text-white">Contact Me</span>
+                        <span className="block mx-auto mt-2 w-12 h-0.5 bg-purple-500/60 rounded-full" />
                     </motion.h2>
                 </div>
                 <motion.div
@@ -196,10 +203,10 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                             className="w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white outline-none transition-all duration-300"
                                             style={{
                                                 borderColor: isFocused
-                                                    ? 'rgba(168,85,247,0.5)'
+                                                    ? 'rgba(168,85,247,0.3)'
                                                     : 'rgba(255,255,255,0.06)',
                                                 boxShadow: isFocused
-                                                    ? '0 0 0 1px rgba(168,85,247,0.2), 0 0 20px rgba(168,85,247,0.05)'
+                                                    ? '0 0 0 1px rgba(168,85,247,0.1), 0 0 12px rgba(168,85,247,0.03)'
                                                     : 'none',
                                             }}
                                         />
@@ -231,10 +238,10 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     className="w-full px-4 py-3 bg-gray-900/50 border rounded-lg text-white outline-none transition-all duration-300 flex-1 resize-none"
                                     style={{
                                         borderColor: focused === 'message'
-                                            ? 'rgba(168,85,247,0.5)'
+                                            ? 'rgba(168,85,247,0.3)'
                                             : 'rgba(255,255,255,0.06)',
                                         boxShadow: focused === 'message'
-                                            ? '0 0 0 1px rgba(168,85,247,0.2), 0 0 20px rgba(168,85,247,0.05)'
+                                            ? '0 0 0 1px rgba(168,85,247,0.1), 0 0 12px rgba(168,85,247,0.03)'
                                             : 'none',
                                     }}
                                 />
@@ -262,12 +269,12 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                         <div className="space-y-4">
                             {[
                                 {
-                                    icon: <HiOutlineMail className="text-2xl text-purple-400 flex-shrink-0" />,
+                                    icon: <HiOutlineMail                                 className="text-2xl text-purple-400/70 flex-shrink-0" />,
                                     title: 'Email',
                                     value: 'mharshil1234@gmail.com',
                                     href: 'mailto:mharshil1234@gmail.com',
-                                    borderHover: 'hover:border-purple-600',
-                                    shadowHover: 'hover:shadow-purple-900/50',
+                                    borderHover: 'hover:border-purple-600/50',
+                                    shadowHover: 'hover:shadow-purple-900/30',
                                 },
                                 {
                                     icon: <FaLinkedin className="text-2xl text-blue-400 flex-shrink-0" />,
@@ -306,7 +313,7 @@ const ContactMe = forwardRef<HTMLElement>((_, ref) => {
                                     </motion.div>
                                     <div>
                                         <p className="font-semibold text-white">{item.title}</p>
-                                        <p className="text-gray-400 group-hover:text-purple-400 transition-colors text-sm">
+                                        <p className="text-gray-400 group-hover:text-purple-400/70 transition-colors text-sm">
                                             {item.value}
                                         </p>
                                     </div>

@@ -58,8 +58,8 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
             className="w-full min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
         >
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-0 w-72 h-72 bg-purple-600/5 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-cyan-600/5 rounded-full blur-3xl" />
+                <div className="absolute top-1/4 left-0 w-72 h-72 bg-purple-600/3 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-cyan-600/3 rounded-full blur-3xl" />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
@@ -71,9 +71,8 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
                         transition={{ duration: 0.6 }}
                         className="text-4xl sm:text-5xl font-bold text-center"
                     >
-                        <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
-                            Clubs & Communities
-                        </span>
+                        <span className="text-white">Clubs & Communities</span>
+                        <span className="block mx-auto mt-2 w-12 h-0.5 bg-purple-500/60 rounded-full" />
                     </motion.h2>
                 </div>
 
@@ -84,11 +83,13 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
                     viewport={{ once: true, amount: 0.2 }}
                     className="flex flex-col md:flex-row justify-center items-center gap-8"
                 >
-                    {clubs.map((club, index) => (
+                    {clubs.map((club, index) => {
+                        const accentBorder = index === 0 ? "border-t-purple-500/40" : "border-t-cyan-500/40";
+                        return (
                         <motion.div
                             key={index}
                             variants={index === 0 ? cardLeft : cardRight}
-                            className="w-full md:w-96"
+                            className={`w-full md:w-96 border-t-2 ${accentBorder} rounded-xl`}
                             style={{ perspective: "1000px" }}
                         >
                             <ClubCard
@@ -100,7 +101,8 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
                                 linkedin={club.linkedin}
                             />
                         </motion.div>
-                    ))}
+                        );
+                    })}
                 </motion.div>
             </div>
         </section>

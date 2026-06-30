@@ -135,7 +135,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                                 {[
                                     { icon: <FaGithub size={28} />, href: "https://github.com/mharshil1234", color: "hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]" },
                                     { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/harshil-maheshwari/", color: "hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]" },
-                                    { icon: <FaEnvelope size={28} />, href: "mailto:mharshil1234@gmail.com", color: "hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]" },
+                                    { icon: <FaEnvelope size={28} />, href: "mailto:mharshil1234@gmail.com", color: "hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]" },
                                 ].map((item, index) => (
                                     <motion.a
                                         key={index}

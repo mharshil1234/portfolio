@@ -13,12 +13,12 @@ export function ScrollPath() {
                 <div className="absolute left-1/2 -translate-x-1/2 inset-y-0 w-px bg-white/[0.04] rounded-full" />
 
                 <motion.div
-                    className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-28 bg-gradient-to-b from-purple-500/10 via-fuchsia-500/5 to-cyan-400/5 blur-2xl origin-top rounded-full"
+                    className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-28 bg-gradient-to-b from-purple-500/5 via-fuchsia-500/3 to-cyan-400/3 blur-2xl origin-top rounded-full"
                     style={{ scaleY: scrollYProgress }}
                 />
 
                 <motion.div
-                    className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-14 bg-gradient-to-b from-purple-600/15 via-fuchsia-500/8 to-cyan-400/5 blur-xl origin-top rounded-full"
+                    className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-14 bg-gradient-to-b from-purple-600/8 via-fuchsia-500/5 to-cyan-400/3 blur-xl origin-top rounded-full"
                     style={{ scaleY: scrollYProgress }}
                 />
 
@@ -40,10 +40,10 @@ export function ScrollPath() {
                     style={{ top: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
                 >
                     <div className="relative flex items-center justify-center">
-                        <div className="absolute h-10 w-10 rounded-full border border-purple-400/20 animate-ping [animation-duration:3s]" />
+                        <div className="absolute h-10 w-10 rounded-full border border-purple-400/10 animate-ping [animation-duration:3s]" />
                         <div className="absolute h-8 w-8 rounded-full border border-fuchsia-400/10" />
-                        <div className="absolute h-6 w-6 rounded-full bg-gradient-to-br from-purple-500/30 to-cyan-400/20 blur-md" />
-                        <div className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_30px_rgba(168,85,247,0.8),0_0_60px_rgba(168,85,247,0.4),0_0_100px_rgba(168,85,247,0.2)]" />
+                        <div className="absolute h-6 w-6 rounded-full bg-gradient-to-br from-purple-500/15 to-cyan-400/10 blur-md" />
+                        <div className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_20px_rgba(168,85,247,0.4),0_0_40px_rgba(168,85,247,0.2)]" />
                     </div>
                 </motion.div>
             </div>

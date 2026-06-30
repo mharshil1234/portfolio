@@ -1,7 +1,7 @@
 'use client';
 
-import React, { RefObject, useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { RefObject, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface NavbarProps {
   aboutRef: RefObject<HTMLElement | null>;
@@ -20,15 +20,10 @@ export default function Navbar({
 }: NavbarProps) {
   const [activeSection, setActiveSection] = useState('about');
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastScroll = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const current = window.scrollY;
-      setScrolled(current > 50);
-      setHidden(current > lastScroll.current && current > 200);
-      lastScroll.current = current;
+      setScrolled(window.scrollY > 50);
 
       const sections = [
         { id: 'about', ref: aboutRef },
@@ -68,26 +63,15 @@ export default function Navbar({
 
   return (
     <motion.nav
-      initial={{ y: 0 }}
-      animate={{ y: hidden ? -120 : 0 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
       className="fixed top-0 left-0 right-0 z-50 hidden md:flex justify-center pt-6"
     >
       <motion.div
         animate={{
-          backgroundColor: scrolled
-            ? 'rgba(17, 0, 34, 0.85)'
-            : 'rgba(17, 0, 34, 0.4)',
-          backdropFilter: scrolled ? 'blur(20px)' : 'blur(8px)',
-          borderColor: scrolled
-            ? 'rgba(168, 85, 247, 0.2)'
-            : 'rgba(255,255,255,0.06)',
-          boxShadow: scrolled
-            ? '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.1)'
-            : '0 4px 16px rgba(0,0,0,0.2)',
+          backgroundColor: scrolled ? 'rgba(15, 15, 19, 0.6)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(16px)' : 'blur(0px)',
         }}
         transition={{ duration: 0.4 }}
-        className="rounded-full px-5 py-2 border flex items-center gap-1"
+        className="px-4 py-2 rounded-full border border-white/[0.06] flex items-center gap-1"
       >
         {sections.map((s) => {
           const isActive = activeSection === s.id;
@@ -95,21 +79,20 @@ export default function Navbar({
             <motion.button
               key={s.id}
               onClick={() => scrollToSection(s.ref)}
-              layout
-              className="relative px-4 py-2 rounded-full text-sm font-medium transition-colors"
-              style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.5)' }}
+              className="relative px-4 py-2 text-sm font-medium transition-colors"
+              style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.4)' }}
               whileHover={{ color: '#fff' }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.98 }}
             >
+              {s.label}
               {isActive && (
                 <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-purple-600"
-                  style={{ boxShadow: '0 0 20px rgba(168,85,247,0.3)' }}
+                  layoutId="nav-underline"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] bg-white rounded-full"
+                  style={{ width: 16 }}
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
-              <span className="relative z-10">{s.label}</span>
             </motion.button>
           );
         })}

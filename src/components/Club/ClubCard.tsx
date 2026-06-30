@@ -57,16 +57,16 @@ const ClubCard: React.FC<ClubCardProps> = ({
             }}
             whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group"
+            className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group hover:border-white/[0.12] transition-colors duration-500"
         >
             <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                    background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(168,85,247,0.12) 0%, transparent 60%)`,
+                    background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(168,85,247,0.07) 0%, transparent 60%)`,
                 }}
             />
             <div
-                className="absolute -inset-1 bg-gradient-to-r from-purple-600/10 to-cyan-400/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute -inset-1 bg-gradient-to-r from-purple-600/5 to-cyan-400/5 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ transform: "translateZ(-10px)" }}
             />
 
@@ -105,7 +105,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
                             href={website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.2)" }}
+                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.12)" }}
                             whileTap={{ scale: 0.9 }}
                             className="p-2.5 bg-white/[0.06] rounded-full border border-white/[0.06] transition-colors duration-300"
                             title="Website"
@@ -118,7 +118,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
                             href={github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.2)" }}
+                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.12)" }}
                             whileTap={{ scale: 0.9 }}
                             className="p-2.5 bg-white/[0.06] rounded-full border border-white/[0.06] transition-colors duration-300"
                             title="GitHub"
@@ -131,7 +131,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
                             href={linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.2)" }}
+                            whileHover={{ scale: 1.2, backgroundColor: "rgba(168,85,247,0.12)" }}
                             whileTap={{ scale: 0.9 }}
                             className="p-2.5 bg-white/[0.06] rounded-full border border-white/[0.06] transition-colors duration-300"
                             title="LinkedIn"

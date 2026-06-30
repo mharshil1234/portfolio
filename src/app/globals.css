@@ -13,10 +13,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+:root {
+    --background: #0f0f13;
+    --foreground: #ededed;
+}
 }
 
 body {
@@ -28,13 +28,8 @@ body {
 .page-wrapper {
     position: relative;
     background:
-        radial-gradient(ellipse 140% 70% at 50% 0%,
-            rgba(168, 85, 247, 0.35),
-            transparent 70%),
-        radial-gradient(ellipse 150% 100% at 50% 100%,
-            rgba(80, 20, 140, 0.08),
-            transparent 70%),
-        #10001f;
+        radial-gradient(ellipse 120% 60% at 50% 0%, rgba(168, 85, 247, 0.08), transparent 60%),
+        #0f0f13;
     background-attachment: fixed;
 }
 

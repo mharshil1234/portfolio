@@ -63,6 +63,13 @@ const getPillVariants = (index: number): Variants => ({
 
 
 
+const accentColors = [
+    { border: "border-t-purple-500/40", glow: "rgba(168,85,247,0.06)", chipHover: "hover:border-purple-500/30 hover:bg-purple-500/5" },
+    { border: "border-t-cyan-500/40", glow: "rgba(6,182,212,0.06)", chipHover: "hover:border-cyan-500/30 hover:bg-cyan-500/5" },
+    { border: "border-t-emerald-500/40", glow: "rgba(16,185,129,0.06)", chipHover: "hover:border-emerald-500/30 hover:bg-emerald-500/5" },
+    { border: "border-t-amber-500/40", glow: "rgba(245,158,11,0.06)", chipHover: "hover:border-amber-500/30 hover:bg-amber-500/5" },
+];
+
 const Skills = forwardRef<HTMLElement>((_, ref) => {
     const skills = [
         { category: "Languages", items: ["Java", "C++", "JavaScript", "TypeScript", "Python"] },
@@ -85,9 +92,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                         transition={{ duration: 0.6 }}
                         className="text-4xl sm:text-5xl font-bold text-center"
                 >
-                    <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
-                        Skills
-                    </span>
+                    <span className="text-white">Skills</span>
+                    <span className="block mx-auto mt-2 w-12 h-0.5 bg-purple-500/60 rounded-full" />
                 </motion.h2>
                 </div>
 
@@ -99,19 +105,28 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                         viewport={{ once: true, amount: 0.2 }}
                         className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl"
                     >
-                        {skills.map((skillGroup, groupIndex) => (
+                        {skills.map((skillGroup, groupIndex) => {
+                            const accent = accentColors[groupIndex];
+                            return (
                             <motion.div
                                 key={groupIndex}
                                 variants={card}
                                 whileHover={{
-                                    y: -3,
-                                    scale: 1.01,
+                                    y: -5,
+                                    scale: 1.02,
                                     transition: { duration: 0.3 },
                                 }}
-                                className="group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] p-6 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-purple-500/5 transition-all duration-500 relative overflow-hidden"
+                                className={`group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 relative overflow-hidden border-t-2 ${accent.border}`}
+                                style={{ boxShadow: `0 0 0 0 ${accent.glow}` }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.boxShadow = `0 0 30px ${accent.glow}`;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.boxShadow = `0 0 0 0 ${accent.glow}`;
+                                }}
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-                                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" style={{ background: `radial-gradient(circle at 50% 0%, ${accent.glow}, transparent 70%)` }} />
+                                <div className="absolute -inset-1 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at 50% 0%, ${accent.glow.replace('0.06', '0.10')}, transparent 70%)` }} />
 
                                 <div className="relative z-10">
                                     <motion.h3
@@ -137,12 +152,12 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                                     key={skill}
                                                     variants={getPillVariants(globalIdx)}
                                                     whileHover={{
-                                                        scale: 1.04,
-                                                        y: -1,
+                                                        scale: 1.06,
+                                                        y: -2,
                                                         transition: { type: "spring", stiffness: 400, damping: 10 },
                                                     }}
                                                     whileTap={{ scale: 0.95 }}
-                                                    className="px-4 py-2 bg-white/[0.06] border border-white/[0.08] text-gray-200 rounded-full text-sm font-medium cursor-pointer backdrop-blur-sm transition-colors duration-300"
+                                                    className={`px-4 py-2 bg-white/[0.06] border border-white/[0.08] text-gray-200 rounded-full text-sm font-medium cursor-pointer backdrop-blur-sm transition-all duration-300 ${accent.chipHover}`}
                                                 >
                                                     {skill}
                                                 </motion.span>
@@ -151,7 +166,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                     </motion.div>
                                 </div>
                             </motion.div>
-                        ))}
+                            );
+                        })}
                     </motion.div>
                 </div>
             </div>

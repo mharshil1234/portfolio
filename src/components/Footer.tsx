@@ -41,7 +41,7 @@ export function Footer() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="w-full bg-[#1a1834] text-white py-6 px-8 font-sans"
+            className="w-full bg-[#11151f] text-white py-6 px-8 font-sans"
         >
             <div className="max-w-7xl mx-auto grid grid-cols-3 items-center">
 
