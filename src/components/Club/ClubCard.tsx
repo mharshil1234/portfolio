@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FiExternalLink, FiGithub, FiLinkedin } from "react-icons/fi";
 import { motion } from "framer-motion";
 
@@ -19,55 +19,24 @@ const ClubCard: React.FC<ClubCardProps> = ({
     github,
     linkedin,
 }) => {
-    const cardRef = useRef<HTMLDivElement>(null);
-    const [rotateX, setRotateX] = useState(0);
-    const [rotateY, setRotateY] = useState(0);
-    const [glowX, setGlowX] = useState(50);
-    const [glowY, setGlowY] = useState(50);
     const [hovered, setHovered] = useState(false);
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const card = cardRef.current;
-        if (!card) return;
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        setRotateX((y - centerY) / 12);
-        setRotateY((centerX - x) / 12);
-        setGlowX((x / rect.width) * 100);
-        setGlowY((y / rect.height) * 100);
-    };
 
     const handleMouseEnter = () => setHovered(true);
 
-    const handleMouseLeave = () => {
-        setRotateX(0);
-        setRotateY(0);
-        setGlowX(50);
-        setGlowY(50);
-        setHovered(false);
-    };
+    const handleMouseLeave = () => setHovered(false);
 
     return (
-        <motion.div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${hovered ? -8 : 0}px)`,
-                transformStyle: "preserve-3d",
-                transition: "transform 0.2s ease",
-            }}
-            className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
-        >
+        <motion.div whileHover={{ y: -8 }} transition={{ duration: 0.2, ease: "easeOut" }}>
+            <motion.div
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className="relative bg-gray-800/40 backdrop-blur-sm p-8 rounded-xl border border-white/[0.06] shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+            >
             <div
                 className="absolute inset-0 transition-opacity duration-500"
                 style={{
                     opacity: hovered ? 1 : 0,
-                    background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(168,85,247,0.07) 0%, transparent 60%)`,
+                    background: `radial-gradient(circle at 50% 50%, rgba(168,85,247,0.07) 0%, transparent 60%)`,
                 }}
             />
             <div
@@ -146,6 +115,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
                     )}
                 </div>
             </div>
+            </motion.div>
         </motion.div>
     );
 };
