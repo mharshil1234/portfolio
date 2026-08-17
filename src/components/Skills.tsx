@@ -6,7 +6,7 @@ const container = {
     hidden: {},
     visible: {
         transition: {
-            staggerChildren: 0.12,
+            staggerChildren: 0.06,
         },
     },
 };
@@ -14,16 +14,13 @@ const container = {
 const card: Variants = {
     hidden: {
         opacity: 0,
-        y: 60,
-        rotateX: 15,
-        perspective: 1000,
+        y: 18,
     },
     visible: {
         opacity: 1,
         y: 0,
-        rotateX: 0,
         transition: {
-            duration: 0.6,
+            duration: 0.4,
             ease: [0.22, 1, 0.36, 1],
         },
     },
@@ -33,30 +30,24 @@ const pillContainer = {
     hidden: {},
     visible: {
         transition: {
-            staggerChildren: 0.025,
+            staggerChildren: 0.012,
         },
     },
 };
 
-const getPillVariants = (index: number): Variants => ({
+const getPillVariants = (): Variants => ({
     hidden: {
         opacity: 0,
-        scale: 0.3,
-        x: index % 2 === 0 ? -120 - (index % 5) * 20 : 120 + (index % 5) * 20,
-        y: 60 + (index % 4) * 15,
-        rotate: index % 2 === 0 ? -15 : 15,
+        scale: 0.96,
+        y: 8,
     },
     visible: {
         opacity: 1,
         scale: 1,
-        x: 0,
         y: 0,
-        rotate: 0,
         transition: {
-            type: "spring" as const,
-            stiffness: 100 + (index % 3) * 30,
-            damping: 12 + (index % 3) * 2,
-            mass: 0.6 + (index % 3) * 0.1,
+            duration: 0.22,
+            ease: "easeOut",
         },
     },
 });
@@ -112,9 +103,8 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                 key={groupIndex}
                                 variants={card}
                                 whileHover={{
-                                    y: -5,
-                                    scale: 1.02,
-                                    transition: { duration: 0.3 },
+                                    y: -2,
+                                    transition: { duration: 0.2 },
                                 }}
                                 className={`group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 relative overflow-hidden border-t-2 ${accent.border}`}
                                 style={{ boxShadow: `0 0 0 0 ${accent.glow}` }}
@@ -143,26 +133,20 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
                                         variants={pillContainer}
                                         className="flex flex-wrap gap-3"
                                     >
-                                        {skillGroup.items.map((skill, i) => {
-                                            const globalIdx = skills
-                                                .slice(0, groupIndex)
-                                                .reduce((s, g) => s + g.items.length, 0) + i;
-                                            return (
+                                        {skillGroup.items.map((skill) => (
                                                 <motion.span
                                                     key={skill}
-                                                    variants={getPillVariants(globalIdx)}
+                                                    variants={getPillVariants()}
                                                     whileHover={{
-                                                        scale: 1.06,
-                                                        y: -2,
-                                                        transition: { type: "spring", stiffness: 400, damping: 10 },
+                                                        scale: 1.02,
+                                                        transition: { duration: 0.15 },
                                                     }}
-                                                    whileTap={{ scale: 0.95 }}
+                                                    whileTap={{ scale: 0.98 }}
                                                     className={`px-4 py-2 bg-white/[0.06] border border-white/[0.08] text-gray-200 rounded-full text-sm font-medium cursor-pointer backdrop-blur-sm transition-all duration-300 ${accent.chipHover}`}
                                                 >
                                                     {skill}
                                                 </motion.span>
-                                            );
-                                        })}
+                                        ))}
                                     </motion.div>
                                 </div>
                             </motion.div>

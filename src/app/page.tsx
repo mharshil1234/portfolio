@@ -8,7 +8,7 @@ import { Clubs } from '@/components/Clubs';
 import { Projects } from '@/components/Projects';
 import { ContactMe } from '@/components/ContactMe';
 import { Footer } from '@/components/Footer';
-import { ScrollRoadmap } from '@/components/ScrollRoadmap';
+// import { ScrollRoadmap } from '@/components/ScrollRoadmap';
 
 export default function Home() {
   const aboutRef = useRef<HTMLElement>(null);
@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="page-wrapper">
-      <ScrollRoadmap />
+      {/* <ScrollRoadmap /> */}
       <Navbar
         aboutRef={aboutRef}
         skillsRef={skillsRef}
