@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Link State Routing Simulator</title>
+  <style>
+    :root {
+      --bg: #f6f7f4;
+      --surface: #fff;
+      --ink: #14231f;
+      --muted: #5d6b66;
+      --line: #cfd6d1;
+      --accent: #0b7a5a;
+      --tree: #d1371f;
+      --warn: #e0a100;
+      --settled: #cfeadf;
+      --current: #ffe29a;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1a17;
+        --surface: #16251f;
+        --ink: #e6efeb;
+        --muted: #92a39c;
+        --line: #2c3f37;
+        --accent: #3fd0a0;
+        --tree: #ff6b52;
+        --warn: #f2b92e;
+        --settled: #1d4a3b;
+        --current: #5a4a12
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0f1a17;
+      --surface: #16251f;
+      --ink: #e6efeb;
+      --muted: #92a39c;
+      --line: #2c3f37;
+      --accent: #3fd0a0;
+      --tree: #ff6b52;
+      --warn: #f2b92e;
+      --settled: #1d4a3b;
+      --current: #5a4a12
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 16px 40px
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 4px;
+      letter-spacing: -.01em
+    }
+
+    p.sub {
+      margin: 0 0 16px;
+      color: var(--muted)
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    button,
+    select,
+    input[type=number] {
+      font: inherit;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 12px
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      font-weight: 600
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 14px
+    }
+
+    @media(max-width:760px) {
+      .grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-width: 0
+    }
+
+    .panel h2 {
+      font-size: 1rem;
+      margin: 0 0 8px
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+
+    #log {
+      min-height: 44px;
+      margin: 10px 0 0;
+      padding: 8px 10px;
+      border-left: 3px solid var(--accent);
+      background: var(--bg);
+      border-radius: 0 6px 6px 0
+    }
+
+    .scroll {
+      overflow-x: auto
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-variant-numeric: tabular-nums
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 4px 8px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .85rem
+    }
+
+    tr.set td {
+      background: var(--settled)
+    }
+
+    .edges {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 8px
+    }
+
+    .edges label {
+      display: flex;
+      gap: 6px;
+      align-items: center
+    }
+
+    .edges input[type=number] {
+      width: 56px;
+      padding: 3px 6px
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: .85rem;
+      margin-top: 8px
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      margin-right: 5px;
+      vertical-align: -1px
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Link State Routing Simulator</h1>
+    <p class="sub">Dijkstra’s algorithm running step by step. Change a link cost or switch a link off and the routes
+      recompute.</p>
+    <div class="bar">
+      <label>Source <select id="src"></select></label>
+      <button id="step" class="primary">Step</button>
+      <button id="play">Play</button>
+      <button id="reset">Reset</button>
+      <label>Speed <input id="speed" type="range" min="1" max="5" value="3"></label>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <svg id="svg" viewBox="0 0 600 320" role="img" aria-label="Network topology"></svg>
+        <div class="legend"><span><i style="background:var(--settled)"></i>Settled</span><span><i
+              style="background:var(--current)"></i>Being processed</span><span><i
+              style="background:var(--tree)"></i>Shortest-path tree</span><span><i
+              style="background:var(--warn)"></i>Link being relaxed</span></div>
+        <div id="log"></div>
+      </div>
+      <div class="panel">
+        <h2>Routing table</h2>
+        <div class="scroll">
+          <table id="tbl"></table>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h2>Links</h2>
+      <div class="edges" id="edges"></div>
+    </div>
+  </main>
+  <script>
+    const N = ["A", "B", "C", "D", "E", "F"];
+    const P = { A: [60, 160], B: [200, 60], C: [230, 250], D: [400, 60], E: [420, 250], F: [545, 160] };
+    const E = [["A", "B", 2], ["A", "C", 5], ["B", "C", 2], ["B", "D", 7], ["C", "D", 3], ["C", "E", 1], ["D", "E", 1], ["D", "F", 5], ["E", "F", 2]].map(([a, b, w]) => ({ a, b, w, on: true }));
+    let frames = [], idx = 0, timer = null, src = "A";
+    const $ = id => document.getElementById(id);
+    const NS = "http://www.w3.org/2000/svg";
+
+    function build() {
+      const dist = {}, prev = {}, done = new Set();
+      N.forEach(n => { dist[n] = Infinity; prev[n] = null });
+      dist[src] = 0; frames = [];
+      const snap = (note, cur, edge) => frames.push({ dist: { ...dist }, prev: { ...prev }, done: new Set(done), cur, edge, note });
+      snap("Start: " + src + " has cost 0, all others are unknown.", null, null);
+      for (; ;) {
+        let u = null;
+        N.forEach(n => { if (!done.has(n) && dist[n] < Infinity && (u === null || dist[n] < dist[u])) u = n });
+        if (u === null) break;
+        done.add(u);
+        snap("Settle " + u + " at cost " + dist[u] + ".", u, null);
+        E.forEach((e, i) => {
+          if (!e.on || (e.a !== u && e.b !== u)) return;
+          const v = e.a === u ? e.b : e.a;
+          if (done.has(v)) return;
+          const nd = dist[u] + e.w;
+          if (nd < dist[v]) { dist[v] = nd; prev[v] = u; snap("Relax " + u + "–" + v + ": " + v + " improves to " + nd + " via " + u + ".", u, i) }
+          else snap("Check " + u + "–" + v + ": " + nd + " is not better than " + (dist[v] === Infinity ? "∞" : dist[v]) + ".", u, i)
+        });
+      }
+      snap("Done. Every reachable router is settled.", null, null);
+      idx = 0;
+    }
+
+    function hop(prev, n) {
+      let x = n;
+      while (prev[x] !== null && prev[x] !== src) x = prev[x];
+      return prev[x] === null ? "–" : x;
+    }
+    function path(prev, n) {
+      const p = []; let x = n;
+      while (x !== null) { p.unshift(x); x = prev[x] }
+      return p.join(" → ");
+    }
+    function el(tag, attrs, text) {
+      const x = document.createElementNS(NS, tag);
+      for (const k in attrs) x.setAttribute(k, attrs[k]);
+      if (text !== undefined) x.textContent = text;
+      return x;
+    }
+
+    function render() {
+      const f = frames[idx];
+      const svg = $("svg"); svg.textContent = "";
+      const tree = new Set();
+      N.forEach(n => { if (f.prev[n] !== null) tree.add([f.prev[n], n].sort().join()) });
+      E.forEach((e, i) => {
+        const key = [e.a, e.b].sort().join();
+        const hot = f.edge === i, inTree = tree.has(key) && e.on;
+        const [x1, y1] = P[e.a], [x2, y2] = P[e.b];
+        svg.appendChild(el("line", { x1, y1, x2, y2, stroke: !e.on ? "var(--line)" : hot ? "var(--warn)" : inTree ? "var(--tree)" : "var(--muted)", "stroke-width": inTree || hot ? 4 : 1.5, "stroke-dasharray": e.on ? "0" : "6 5", opacity: e.on ? 1 : .6 }));
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        svg.appendChild(el("rect", { x: mx - 12, y: my - 11, width: 24, height: 20, rx: 4, fill: "var(--surface)", stroke: "var(--line)" }));
+        svg.appendChild(el("text", { x: mx, y: my + 4, "text-anchor": "middle", "font-size": 13, fill: "var(--ink)" }, e.w));
+      });
+      N.forEach(n => {
+        const [x, y] = P[n];
+        const fill = f.cur === n ? "var(--current)" : f.done.has(n) ? "var(--settled)" : "var(--surface)";
+        svg.appendChild(el("circle", { cx: x, cy: y, r: 24, fill, stroke: n === src ? "var(--accent)" : "var(--muted)", "stroke-width": n === src ? 4 : 2 }));
+        svg.appendChild(el("text", { x, y: y + 5, "text-anchor": "middle", "font-size": 16, "font-weight": 700, fill: "var(--ink)" }, n));
+        svg.appendChild(el("text", { x, y: y + 44, "text-anchor": "middle", "font-size": 13, fill: "var(--muted)" }, f.dist[n] === Infinity ? "∞" : f.dist[n]));
+      });
+      $("log").textContent = "Step " + idx + " of " + (frames.length - 1) + ": " + f.note;
+      let h = "<tr><th>Dest</th><th>Cost</th><th>Next hop</th><th>Path</th></tr>";
+      N.filter(n => n !== src).forEach(n => {
+        const s = f.done.has(n);
+        h += "<tr class='" + (s ? "set" : "") + "'><td>" + n + "</td><td>" + (f.dist[n] === Infinity ? "∞" : f.dist[n]) + "</td><td>" + (s ? hop(f.prev, n) : "–") + "</td><td>" + (s ? path(f.prev, n) : "–") + "</td></tr>";
+      });
+      $("tbl").innerHTML = h;
+      $("step").disabled = idx >= frames.length - 1;
+    }
+
+    function stop() { clearInterval(timer); timer = null; $("play").textContent = "Play" }
+    function next() { if (idx < frames.length - 1) { idx++; render() } else stop() }
+    function play() {
+      if (timer) { stop(); return }
+      if (idx >= frames.length - 1) { idx = 0; render() }
+      $("play").textContent = "Pause";
+      timer = setInterval(next, 1300 - $("speed").value * 220);
+    }
+    function rebuild() { stop(); build(); render() }
+
+    N.forEach(n => { const o = document.createElement("option"); o.value = o.textContent = n; $("src").appendChild(o) });
+    $("src").onchange = e => { src = e.target.value; rebuild() };
+    $("step").onclick = () => { stop(); next() };
+    $("play").onclick = play;
+    $("reset").onclick = () => { stop(); idx = 0; render() };
+    $("speed").oninput = () => { if (timer) { stop(); play() } };
+
+    E.forEach((e, i) => {
+      const l = document.createElement("label");
+      const c = document.createElement("input"); c.type = "checkbox"; c.checked = true; c.setAttribute("aria-label", "Link " + e.a + e.b + " enabled");
+      const w = document.createElement("input"); w.type = "number"; w.min = 1; w.max = 99; w.value = e.w; w.setAttribute("aria-label", "Cost of link " + e.a + e.b);
+      c.onchange = () => { e.on = c.checked; rebuild() };
+      w.onchange = () => { e.w = Math.max(1, Math.min(99, parseInt(w.value) || 1)); w.value = e.w; rebuild() };
+      l.append(c, document.createTextNode(e.a + "–" + e.b + " cost "), w);
+      $("edges").appendChild(l);
+    });
+    rebuild();
+  </script>
+</body>
+
+</html>
