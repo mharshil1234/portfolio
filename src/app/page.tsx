@@ -8,6 +8,8 @@ import { Clubs } from '@/components/Clubs';
 import { Projects } from '@/components/Projects';
 import { ContactMe } from '@/components/ContactMe';
 import { Footer } from '@/components/Footer';
+import { PortfolioIntro } from '@/components/PortfolioIntro';
+import { ScrollScene } from '@/components/ScrollScene';
 // import { ScrollRoadmap } from '@/components/ScrollRoadmap';
 
 export default function Home() {
@@ -20,6 +22,7 @@ export default function Home() {
   return (
     <div className="page-wrapper">
       {/* <ScrollRoadmap /> */}
+      <PortfolioIntro aboutRef={aboutRef} />
       <Navbar
         aboutRef={aboutRef}
         skillsRef={skillsRef}
@@ -28,13 +31,13 @@ export default function Home() {
         contactRef={contactRef}
       />
       <div className="pt-4">
-        <AboutMe ref={aboutRef} />
-        <Skills ref={skillsRef} />
-        <Clubs ref={clubsRef} />
-        <Projects ref={projectsRef} />
-        <ContactMe ref={contactRef} />
+        <ScrollScene index={0}><AboutMe ref={aboutRef} /></ScrollScene>
+        <ScrollScene index={1}><Skills ref={skillsRef} /></ScrollScene>
+        <ScrollScene index={2}><Clubs ref={clubsRef} /></ScrollScene>
+        <ScrollScene index={3}><Projects ref={projectsRef} /></ScrollScene>
+        <ScrollScene index={4}><ContactMe ref={contactRef} /></ScrollScene>
       </div>
-      <Footer />
+      <ScrollScene index={5}><Footer /></ScrollScene>
     </div>
   );
 }
