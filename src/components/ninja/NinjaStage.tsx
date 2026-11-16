@@ -114,7 +114,7 @@ export function NinjaStage({ variant, className = "" }: { variant: "intro" | "he
             <svg
                 viewBox="0 0 400 500"
                 preserveAspectRatio="xMidYMax meet"
-                className="absolute bottom-[4vh] left-1/2 h-[62vh] -translate-x-1/2 overflow-visible md:left-auto md:right-[3vw] md:h-[72vh] md:translate-x-0"
+                className="absolute -bottom-[2vh] left-1/2 h-[62vh] -translate-x-1/2 overflow-visible md:left-auto md:right-[3vw] md:h-[72vh] md:translate-x-0"
                 aria-hidden
             >
                 <defs>
