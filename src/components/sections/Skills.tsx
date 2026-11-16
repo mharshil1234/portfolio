@@ -1,56 +1,112 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { skills } from "@/data/content";
 import { Hanko, SectionHeader, Shuriken } from "@/components/ui/ninja";
 
 const NUMERALS = ["I", "II", "III", "IV"];
-const ALL = skills.flatMap((g) => g.items);
+const ACCENTS = ["#fb923c", "#22d3ee", "#34d399", "#f87171"];
 
-/** Infinite marquee whose speed and direction react to scroll velocity. */
-function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
-    const track = useRef<HTMLDivElement>(null);
+/** Every skill, round-robin across categories so the colours mix on the board. */
+const TAGS = (() => {
+    const out: { name: string; accent: string }[] = [];
+    const longest = Math.max(...skills.map((g) => g.items.length));
+    for (let i = 0; i < longest; i++)
+        skills.forEach((g, c) => {
+            if (g.items[i]) out.push({ name: g.items[i], accent: ACCENTS[c % ACCENTS.length] });
+        });
+    return out;
+})();
+
+/** Deterministic little tilt per tag, so the board looks hand-pinned. */
+const tilt = (i: number) => ((i * 37) % 11) - 5;
+
+/**
+ * Wooden training board. As you scroll, shurikens fly in from either side and
+ * pin each skill tag to the wood. Scrolling back pulls them out again.
+ */
+function TargetBoard() {
+    const ref = useRef<HTMLDivElement>(null);
 
     useGSAP(
         () => {
-            const el = track.current;
-            if (!el) return;
-            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            const mm = gsap.matchMedia();
+            mm.add("(prefers-reduced-motion: no-preference)", () => {
+                const tl = gsap.timeline({
+                    scrollTrigger: { trigger: ref.current, start: "top 85%", end: "bottom 60%", scrub: 0.6, invalidateOnRefresh: true },
+                });
 
-            const loop = gsap.fromTo(
-                el,
-                { xPercent: reverse ? -50 : 0 },
-                { xPercent: reverse ? 0 : -50, duration: 40, ease: "none", repeat: -1 },
-            );
-            const st = ScrollTrigger.create({
-                start: 0,
-                end: "max",
-                onUpdate: (self) => {
-                    const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 400, 5);
-                    const sign = self.direction;
-                    gsap.to(loop, { timeScale: boost * sign, duration: 0.15, overwrite: true });
-                    gsap.to(loop, { timeScale: sign, duration: 1.2, delay: 0.15 });
-                },
+                gsap.utils.toArray<HTMLElement>(".skill-tag").forEach((tag, i) => {
+                    const star = tag.querySelector(".tag-star");
+                    const paper = tag.querySelector(".tag-paper");
+                    const side = i % 2 === 0 ? -1 : 1;
+                    const t = i * 0.12;
+
+                    // Shuriken: thrown from off-screen, spinning, lands on the pin spot
+                    tl.fromTo(
+                        star,
+                        { x: () => side * window.innerWidth * 0.8, y: () => -window.innerHeight * 0.35, rotate: 0, opacity: 1 },
+                        { x: 0, y: 0, rotate: side * 1080, duration: 0.5, ease: "power1.in" },
+                        t,
+                    )
+                        // Tag slaps onto the board where it hits
+                        .fromTo(
+                            paper,
+                            { opacity: 0, scale: 0.6, rotate: side * 25 },
+                            { opacity: 1, scale: 1, rotate: 0, duration: 0.12, ease: "back.out(3)" },
+                            t + 0.46,
+                        )
+                        // Thud: a quick wobble on impact
+                        .fromTo(
+                            tag,
+                            { x: 0 },
+                            { keyframes: [{ x: side * -5 }, { x: side * 3 }, { x: side * -1 }, { x: 0 }], duration: 0.16 },
+                            t + 0.5,
+                        );
+                });
             });
-            return () => {
-                st.kill();
-                loop.kill();
-            };
+            return () => mm.revert();
         },
-        { dependencies: [reverse] },
+        { scope: ref },
     );
 
     return (
-        <div className="relative flex overflow-hidden py-3 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-            <div ref={track} className="flex shrink-0 gap-6 pr-6 will-change-transform">
-                {[...items, ...items].map((s, i) => (
-                    <span key={i} className="flex shrink-0 items-center gap-6 text-5xl font-black tracking-tight text-white/90 sm:text-7xl">
-                        {s}
-                        <Shuriken size={36} className="spin-slow text-orange-400" />
-                    </span>
+        <div ref={ref} className="mx-auto max-w-6xl px-6">
+            <div className="board relative overflow-hidden rounded-md border-[10px] border-[#24140a] px-4 py-14 sm:px-10 sm:py-16">
+                {/* Ink targets painted on the wood */}
+                {[
+                    "left-[6%] top-[10%] h-40 w-40 sm:h-56 sm:w-56",
+                    "right-[4%] bottom-[6%] h-48 w-48 sm:h-72 sm:w-72",
+                    "left-[44%] top-[38%] hidden h-32 w-32 md:block",
+                ].map((pos) => (
+                    <svg key={pos} viewBox="0 0 100 100" className={`pointer-events-none absolute opacity-40 ${pos}`} aria-hidden>
+                        {[48, 36, 24].map((r) => (
+                            <circle key={r} cx="50" cy="50" r={r} fill="none" stroke="#120a04" strokeWidth="5" style={{ filter: "url(#ink-rough)" }} />
+                        ))}
+                        <circle cx="50" cy="50" r="10" fill="#c4161c" style={{ filter: "url(#ink-rough)" }} />
+                    </svg>
                 ))}
+
+                <ul className="relative flex flex-wrap justify-center gap-x-5 gap-y-9 sm:gap-x-7 sm:gap-y-11">
+                    {TAGS.map((t, i) => (
+                        <li key={t.name} style={{ transform: `rotate(${tilt(i)}deg) translateY(${(i % 3) * 4}px)` }}>
+                            <div className="skill-tag relative">
+                                <span
+                                    className="tag-paper paper block rounded-[2px] border-l-4 px-4 py-2 text-base font-black tracking-tight text-ink shadow-[0_8px_18px_rgba(0,0,0,0.45)] sm:text-2xl"
+                                    style={{ borderLeftColor: t.accent }}
+                                >
+                                    {t.name}
+                                </span>
+                                <span className="tag-star absolute -top-3 left-1/2 -ml-3 text-[#d6d0c4] drop-shadow-[0_3px_3px_rgba(0,0,0,0.6)]">
+                                    <Shuriken size={24} />
+                                </span>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
+            <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.3em] text-white/35">Training ground</p>
         </div>
     );
 }
@@ -103,18 +159,13 @@ function WeaponScroll({ group, index }: { group: (typeof skills)[number]; index:
 }
 
 export function Skills() {
-    const half = Math.ceil(ALL.length / 2);
-
     return (
-        <section id="skills" className="relative z-10 py-32 sm:py-40">
+        <section id="skills" className="relative z-10 overflow-x-clip py-32 sm:py-40">
             <div className="mx-auto mb-16 max-w-7xl px-6">
                 <SectionHeader number="02" label="Arsenal" title="My arsenal." accent="#22d3ee" />
             </div>
 
-            <div className="-rotate-2 space-y-2 border-y border-white/10 bg-white/[0.02] py-6">
-                <Marquee items={ALL.slice(0, half)} />
-                <Marquee items={ALL.slice(half)} reverse />
-            </div>
+            <TargetBoard />
 
             <div className="mx-auto mt-24 grid max-w-7xl items-start gap-x-8 gap-y-14 px-8 sm:grid-cols-2 lg:grid-cols-4">
                 {skills.map((group, i) => (

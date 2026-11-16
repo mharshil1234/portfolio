@@ -35,14 +35,16 @@
         center / 100% 100% no-repeat;
 }
 
-.spin-slow {
-    animation: shuriken-spin 2.4s linear infinite;
-}
-
-@keyframes shuriken-spin {
-    to {
-        transform: rotate(360deg);
-    }
+/* Wooden training board: dark planks with grain and a vignette */
+.board {
+    background-color: #3b2414;
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 86px, rgba(0, 0, 0, 0.5) 86px 89px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 11px),
+        linear-gradient(180deg, #4d3019, #2b190c);
+    box-shadow:
+        inset 0 0 90px rgba(0, 0, 0, 0.75),
+        0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
 :root {
