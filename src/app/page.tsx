@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ScrollProgress } from "@/components/ui/Chrome";
 import { Intro } from "@/components/ninja/Intro";
 import { BrushDivider, InkDefs, ShurikenThrower } from "@/components/ui/ninja";
 import { Hero } from "@/components/sections/Hero";
@@ -18,7 +17,6 @@ export default function Home() {
             <InkDefs />
             <ShurikenThrower />
             <Intro />
-            <ScrollProgress />
             <Navbar />
             <main className="relative z-10">
                 <Hero />

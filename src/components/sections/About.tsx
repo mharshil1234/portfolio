@@ -7,12 +7,6 @@ import { profile } from "@/data/content";
 import { ScrubText, TiltCard } from "@/components/ui/motion";
 import { Hanko, SectionHeader, Shuriken } from "@/components/ui/ninja";
 
-const STATS = [
-    { value: 500, suffix: "+", label: "live contestants on Cookoff" },
-    { value: 1000, suffix: "+", label: "hackathon participants judged" },
-    { value: 4, suffix: "", label: "shipped projects featured" },
-];
-
 export function About() {
     const root = useRef<HTMLElement>(null);
 
@@ -37,20 +31,6 @@ export function About() {
                     duration: 1.4,
                     ease: "expo.inOut",
                     scrollTrigger: { trigger: ".about-frame", start: "top 85%" },
-                });
-            });
-
-            gsap.utils.toArray<HTMLElement>(".stat-num").forEach((el) => {
-                const end = Number(el.dataset.value);
-                const obj = { v: 0 };
-                gsap.to(obj, {
-                    v: end,
-                    duration: 2,
-                    ease: "power3.out",
-                    scrollTrigger: { trigger: el, start: "top 90%" },
-                    onUpdate: () => {
-                        el.textContent = Math.round(obj.v).toLocaleString();
-                    },
                 });
             });
         },
@@ -84,20 +64,6 @@ export function About() {
                 <div>
                     <SectionHeader number="01" label="The Shinobi" title="I make the web feel alive." className="mb-10" />
                     <ScrubText text={profile.about} className="text-2xl font-medium leading-snug text-white sm:text-3xl" />
-
-                    <div className="mt-14 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
-                        {STATS.map((s) => (
-                            <div key={s.label}>
-                                <p className="text-4xl font-black tracking-tight sm:text-5xl">
-                                    <span className="stat-num" data-value={s.value}>
-                                        {s.value.toLocaleString()}
-                                    </span>
-                                    <span className="text-orange-400">{s.suffix}</span>
-                                </p>
-                                <p className="mt-2 text-xs leading-snug text-white/50 sm:text-sm">{s.label}</p>
-                            </div>
-                        ))}
-                    </div>
                 </div>
             </div>
         </section>

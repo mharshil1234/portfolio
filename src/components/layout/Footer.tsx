@@ -2,7 +2,7 @@
 
 import { useLenis } from "lenis/react";
 import { FaArrowUp } from "react-icons/fa";
-import { profile, socials } from "@/data/content";
+import { socials } from "@/data/content";
 import { Magnetic } from "@/components/ui/motion";
 import { Hanko } from "@/components/ui/ninja";
 
@@ -14,12 +14,7 @@ export function Footer() {
             <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
                 <div className="flex items-center gap-4">
                     <Hanko size={36}>HM</Hanko>
-                    <div>
-                        <p className="text-sm text-white/50">
-                            © {new Date().getFullYear()} {profile.name}. Built with Next.js &amp; GSAP.
-                        </p>
-                        <p className="mt-1 font-mono text-[11px] text-white/30">psst, double-click anywhere.</p>
-                    </div>
+                    <p className="font-mono text-[11px] text-white/30">psst, double-click anywhere.</p>
                 </div>
                 <ul className="flex gap-5 text-sm text-white/60">
                     {socials.map((s) => (

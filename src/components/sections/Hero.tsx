@@ -76,7 +76,7 @@ export function Hero() {
                 />
                 <div className="mt-8 flex flex-col items-start gap-6">
                     <p className="hero-fade max-w-md text-base leading-relaxed text-white/70 sm:text-lg">{profile.tagline}</p>
-                    <div className="hero-fade pointer-events-auto flex gap-3">
+                    <div className="hero-fade pointer-events-auto flex flex-wrap gap-3">
                         <Magnetic>
                             <button
                                 onClick={() => goTo("projects")}
@@ -92,6 +92,15 @@ export function Hero() {
                             >
                                 Say hello
                             </button>
+                        </Magnetic>
+                        <Magnetic>
+                            <a
+                                href={profile.resume}
+                                download
+                                className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105"
+                            >
+                                Resume
+                            </a>
                         </Magnetic>
                     </div>
                 </div>

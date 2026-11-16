@@ -86,8 +86,9 @@ export function ScrubText({ text, className = "" }: { text: string; className?: 
                         ease: "none",
                         scrollTrigger: {
                             trigger: ref.current,
-                            start: "top 80%",
-                            end: "bottom 45%",
+                            start: "top bottom",
+                            // Fully revealed as soon as the whole paragraph is on screen
+                            end: "bottom bottom",
                             scrub: true,
                         },
                     },
