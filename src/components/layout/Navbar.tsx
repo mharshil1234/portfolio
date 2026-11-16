@@ -56,7 +56,7 @@ export function Navbar() {
             >
                 <nav
                     className={`flex w-full max-w-5xl items-center justify-between rounded-full border px-3 py-2 transition-colors duration-500 ${
-                        scrolled ? "border-white/10 bg-[#0a0a0a]/70 backdrop-blur-xl" : "border-transparent"
+                        scrolled ? "border-white/10 bg-[#050505]/70 backdrop-blur-xl" : "border-transparent"
                     }`}
                 >
                     <button
@@ -116,7 +116,7 @@ export function Navbar() {
                         animate={{ clipPath: "circle(150% at 100% 0%)" }}
                         exit={{ clipPath: "circle(0% at 100% 0%)" }}
                         transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                        className="fixed inset-0 z-40 flex flex-col justify-center bg-gradient-to-br from-orange-600 via-red-700 to-[#0a0a0a] px-8 md:hidden"
+                        className="fixed inset-0 z-40 flex flex-col justify-center bg-gradient-to-br from-orange-600 via-red-700 to-[#050505] px-8 md:hidden"
                     >
                         {navSections.map((s, i) => (
                             <motion.button

@@ -5,123 +5,15 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
     ContactShadows,
     Environment,
-    Float,
     Lightformer,
     MeshDistortMaterial,
-    RoundedBox,
 } from "@react-three/drei";
 import * as THREE from "three";
 
 const PALETTE = ["#fb923c", "#22d3ee", "#f87171", "#fbbf24", "#34d399"];
 const PALETTE_COLORS = PALETTE.map((c) => new THREE.Color(c));
 
-// Scratch objects reused every frame (avoids per-frame allocation).
-const tmpVec = new THREE.Vector3();
-
 type DistortMat = THREE.MeshPhysicalMaterial & { distort: number };
-
-type ShapeKind = "torus" | "ico" | "box" | "capsule" | "cone" | "knot" | "sphere";
-
-type ShapeDef = {
-    kind: ShapeKind;
-    position: [number, number, number];
-    scale: number;
-    color: string;
-    speed: number;
-};
-
-const SHAPES: ShapeDef[] = [
-    { kind: "torus", position: [-3.4, 1.6, -1], scale: 0.7, color: PALETTE[1], speed: 1.4 },
-    { kind: "ico", position: [3.3, 1.9, -1.5], scale: 0.75, color: PALETTE[2], speed: 1.1 },
-    { kind: "box", position: [-2.9, -1.7, 0], scale: 0.8, color: PALETTE[3], speed: 1.7 },
-    { kind: "capsule", position: [3.1, -1.5, 0.3], scale: 0.55, color: PALETTE[4], speed: 1.3 },
-    { kind: "cone", position: [0.4, 2.7, -2.2], scale: 0.6, color: PALETTE[3], speed: 1.9 },
-    { kind: "knot", position: [-0.6, -2.6, -1.4], scale: 0.45, color: PALETTE[0], speed: 1.2 },
-    { kind: "sphere", position: [4.8, 0.2, -3], scale: 0.5, color: PALETTE[1], speed: 2.1 },
-    { kind: "sphere", position: [-5, 0, -3], scale: 0.4, color: PALETTE[2], speed: 1.6 },
-];
-
-function Geometry({ kind }: { kind: ShapeKind }) {
-    switch (kind) {
-        case "torus":
-            return <torusGeometry args={[0.7, 0.28, 32, 64]} />;
-        case "ico":
-            return <icosahedronGeometry args={[0.9, 0]} />;
-        case "capsule":
-            return <capsuleGeometry args={[0.45, 0.9, 12, 24]} />;
-        case "cone":
-            return <coneGeometry args={[0.7, 1.3, 32]} />;
-        case "knot":
-            return <torusKnotGeometry args={[0.8, 0.26, 128, 24]} />;
-        case "sphere":
-        default:
-            return <sphereGeometry args={[0.8, 48, 48]} />;
-    }
-}
-
-/** A floating shape that spins, reacts to hover, and drifts outward as the page scrolls. */
-function Shape({ def, scrollRef }: { def: ShapeDef; scrollRef: React.RefObject<number> }) {
-    const ref = useRef<THREE.Group>(null);
-    const [hovered, setHovered] = useState(false);
-
-    useFrame((state, delta) => {
-        const g = ref.current;
-        if (!g) return;
-        const s = scrollRef.current ?? 0;
-        // Push shapes out from the centre and toward the camera as you scroll
-        const [bx, by, bz] = def.position;
-        const spread = 1 + s * 1.6;
-        tmpVec.set(bx * spread, by * spread, bz * spread + s * 3);
-        g.position.lerp(tmpVec, 0.08);
-        g.rotation.x += delta * 0.25 * def.speed;
-        g.rotation.y += delta * 0.35 * def.speed;
-        const k = (hovered ? 1.35 : 1) * def.scale;
-        g.scale.setScalar(THREE.MathUtils.damp(g.scale.x, k, 8, delta));
-    });
-
-    const material = (
-        <meshPhysicalMaterial
-            color={def.color}
-            roughness={0.15}
-            metalness={0.1}
-            clearcoat={1}
-            clearcoatRoughness={0.1}
-            iridescence={0.6}
-            iridescenceIOR={1.4}
-            emissive={def.color}
-            emissiveIntensity={hovered ? 0.35 : 0.05}
-        />
-    );
-
-    return (
-        <Float speed={def.speed} rotationIntensity={0.6} floatIntensity={1.4}>
-            <group
-                ref={ref}
-                position={def.position}
-                onPointerOver={(e) => {
-                    e.stopPropagation();
-                    setHovered(true);
-                    document.body.style.cursor = "pointer";
-                }}
-                onPointerOut={() => {
-                    setHovered(false);
-                    document.body.style.cursor = "";
-                }}
-            >
-                {def.kind === "box" ? (
-                    <RoundedBox args={[1.2, 1.2, 1.2]} radius={0.22} smoothness={5}>
-                        {material}
-                    </RoundedBox>
-                ) : (
-                    <mesh>
-                        <Geometry kind={def.kind} />
-                        {material}
-                    </mesh>
-                )}
-            </group>
-        </Float>
-    );
-}
 
 /** The centre blob: wobbles with the pointer and "pops" + changes colour on click. */
 function Blob({ scrollRef }: { scrollRef: React.RefObject<number> }) {
@@ -238,9 +130,6 @@ export default function HeroScene() {
                 <directionalLight position={[5, 5, 5]} intensity={1.2} />
                 <PointerRig>
                     <Blob scrollRef={scrollRef} />
-                    {SHAPES.map((def, i) => (
-                        <Shape key={i} def={def} scrollRef={scrollRef} />
-                    ))}
                 </PointerRig>
                 <ContactShadows position={[0, -3.4, 0]} opacity={0.45} scale={16} blur={2.8} far={5} color="#000000" />
                 {/* Local studio lighting (no HDR download) */}

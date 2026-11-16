@@ -11,7 +11,7 @@ const github = socials.find((s) => s.label === "GitHub")!.href;
 function ProjectCard({ project, index }: { project: Project; index: number }) {
     return (
         <article
-            className="project-card group relative flex w-full shrink-0 md:h-[min(62vh,34rem)] flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#141414] p-8 sm:p-10 md:w-[min(42rem,70vw)]"
+            className="project-card group relative flex w-full shrink-0 md:h-[min(62vh,34rem)] flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0c0c] p-8 sm:p-10 md:w-[min(42rem,70vw)]"
             style={{ ["--accent" as string]: project.accent }}
         >
             {/* Accent glow + giant index number */}

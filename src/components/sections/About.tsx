@@ -76,7 +76,7 @@ export function About() {
                             className="about-photo object-cover will-change-transform"
                             priority={false}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent" />
                     </div>
                     <div className="absolute -right-6 -top-6 [transform:translateZ(60px)]">
                         <div
