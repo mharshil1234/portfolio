@@ -50,7 +50,7 @@ export function Hero() {
     return (
         <section id="hero" ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden">
             {/* Same stage + position as the intro, so the paper burns away onto this exact ninja */}
-            <div className="hero-ninja absolute inset-0 opacity-60 will-change-transform md:opacity-100">
+            <div className="hero-ninja absolute inset-0 opacity-35 will-change-transform md:opacity-100">
                 <NinjaStage variant="hero" />
             </div>
 

@@ -24,11 +24,13 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
                     {index + 1}
                 </span>
 
-                <p className="relative flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
-                    <span className="h-2.5 w-2.5 rotate-45" style={{ background: project.accent }} />
-                    Mission {String(index + 1).padStart(2, "0")}
-                    <span className="h-px w-6 bg-current opacity-40" />
-                    {project.subtitle}
+                <p className="relative flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
+                    <span className="flex items-center gap-3 whitespace-nowrap">
+                        <span className="h-2.5 w-2.5 rotate-45" style={{ background: project.accent }} />
+                        Mission {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="hidden h-px w-6 bg-current opacity-40 lg:block" />
+                    <span className="basis-full lg:basis-auto">{project.subtitle}</span>
                 </p>
                 <h3 className="relative mt-3 text-4xl font-black tracking-tight sm:text-6xl">{project.name}</h3>
                 <p className="relative mt-5 max-w-xl text-base leading-relaxed text-ink/75 sm:text-lg">{project.description}</p>
@@ -41,7 +43,7 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
                     ))}
                 </ul>
 
-                <div className="relative mt-auto flex flex-wrap items-end justify-between gap-6 pt-8">
+                <div className="relative mt-auto flex items-end justify-between gap-4 pt-8">
                     <div className="flex flex-wrap gap-3">
                         {classified && (
                             <span className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 text-sm text-ink/55">
@@ -144,13 +146,13 @@ export function Projects() {
         <section id="projects" ref={root} className="relative z-10 overflow-hidden py-24 md:flex md:h-screen md:items-center md:py-0">
             <div ref={track} className="flex flex-col gap-12 px-6 md:flex-row md:items-center md:gap-12 md:pl-[8vw] md:pr-[8vw]">
                 {/* Intro panel */}
-                <div className="flex shrink-0 flex-col justify-center md:w-[min(30rem,40vw)]">
+                <div className="flex shrink-0 flex-col justify-center md:w-[min(30rem,48vw)]">
                     <SectionHeader number="04" label="Missions" title="Completed missions." accent="#fbbf24" />
                     <p className="mt-6 max-w-sm text-white/60">
                         Things I&apos;ve built and shipped, from contest infrastructure to real-time social apps.
-                        <span className="hidden items-center gap-1.5 md:inline-flex">
-                            &nbsp;Keep scrolling <FaArrowRight size={11} />
-                        </span>
+                    </p>
+                    <p className="mt-3 hidden items-center gap-1.5 text-sm text-white/40 md:flex">
+                        Keep scrolling <FaArrowRight size={11} />
                     </p>
                 </div>
 

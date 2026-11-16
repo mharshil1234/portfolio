@@ -153,7 +153,7 @@ export function SectionHeader({
                 <span className="h-px w-8 bg-current opacity-60" />
                 <span>{label}</span>
             </p>
-            <RevealHeading text={title} className="relative text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl" />
+            <RevealHeading text={title} className="relative text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl" />
             <svg viewBox="0 0 400 20" className="relative mt-3 h-4 w-56 overflow-visible sm:w-72" aria-hidden>
                 <path
                     className="brush-line"

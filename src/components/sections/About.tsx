@@ -38,8 +38,8 @@ export function About() {
     );
 
     return (
-        <section id="about" ref={root} className="relative z-10 px-6 py-32 sm:py-40">
-            <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-[5fr_7fr] lg:gap-24">
+        <section id="about" ref={root} className="relative z-10 overflow-x-clip px-6 py-32 sm:py-40">
+            <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[5fr_7fr] lg:gap-24">
                 <TiltCard className="mx-auto w-full max-w-md" max={6}>
                     <div className="about-frame relative aspect-[4/5] overflow-hidden bg-white/5">
                         <Image
@@ -54,7 +54,7 @@ export function About() {
                     </div>
                     {/* Torn ink-brush frame over the photo edges */}
                     <div className="pointer-events-none absolute -inset-2 border-[14px] border-[#050505] [filter:url(#ink-rough)]" aria-hidden />
-                    <div className="absolute -right-5 -top-5 [transform:translateZ(60px)]">
+                    <div className="absolute -right-2 -top-4 origin-top-right scale-75 [transform:translateZ(60px)] sm:-right-5 sm:-top-5 sm:scale-100">
                         <Hanko size={92} rotate={-8} stamp>
                             <Shuriken size={52} />
                         </Hanko>

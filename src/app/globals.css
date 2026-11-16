@@ -168,3 +168,8 @@ body {
         cursor: pointer;
     }
 }
+
+/* Safety net: no animation (shurikens, stamps, ninja) can ever cause sideways scrolling on phones */
+body {
+    overflow-x: clip;
+}

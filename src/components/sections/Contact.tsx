@@ -110,10 +110,10 @@ export function Contact() {
                 <RevealHeading
                     text="something cool."
                     delay={0.15}
-                    className="text-5xl font-black leading-[0.95] tracking-tight text-orange-400 sm:text-7xl"
+                    className="text-5xl font-black leading-[0.95] tracking-tight text-orange-400 sm:text-6xl lg:text-7xl"
                 />
 
-                <div className="mt-20 grid gap-16 md:grid-cols-[3fr_2fr]">
+                <div className="mt-20 grid gap-16 lg:grid-cols-[3fr_2fr]">
                     {/* The letter */}
                     <div className="relative">
                         <div className="rod-h relative z-10 -mx-2 h-3 rounded-full" />
