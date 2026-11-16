@@ -1,7 +1,7 @@
 "use client";
 
 import React, { forwardRef, useEffect, useState } from "react";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaFileDownload } from "react-icons/fa";
 import { motion, type Variants } from "framer-motion";
 import { HMLogo } from "./HMLogo";
 import { ShatterPhoto } from "./ShatterPhoto";
@@ -131,7 +131,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                             </motion.p>
 
                             {/* Socials */}
-                            <div className="flex gap-6">
+                            <div className="flex flex-wrap items-center gap-6">
                                 {[
                                     { icon: <FaGithub size={28} />, href: "https://github.com/mharshil1234", color: "hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]" },
                                     { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/harshil-maheshwari/", color: "hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]" },
@@ -156,6 +156,23 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                                         {item.icon}
                                     </motion.a>
                                 ))}
+                                <motion.a
+                                    href="/Harshil_Maheshwari_Resume.pdf"
+                                    download
+                                    initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    transition={{ delay: 2.45, duration: 0.3 }}
+                                    whileHover={{
+                                        y: -4,
+                                        scale: 1.05,
+                                        transition: { type: "spring", stiffness: 400, damping: 10 },
+                                    }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="h-12 px-5 rounded-full inline-flex items-center gap-2 text-sm font-semibold text-white bg-purple-500/20 border border-purple-400/40 backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+                                >
+                                    <FaFileDownload size={18} />
+                                    <span>Resume</span>
+                                </motion.a>
                             </div>
                         </div>
                     </div>
