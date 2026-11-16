@@ -6,7 +6,7 @@ export const profile = {
     tagline:
         "I build software that solves real problems. I like learning new tech, exploring ideas and turning them into projects people use.",
     about:
-        "I build full stack web apps, from the database to the UI. Most recently I led Cookoff, a contest platform where a Go backend judged code for 500+ live participants. I like fast backends, clean frontends and shipping things people actually use.",
+        "I build full stack web apps, from the database to the UI. Most recently I led Cookoff 11, a contest platform where a Go backend judged code for 500+ live participants. I like fast backends, clean frontends and shipping things people actually use.",
     photo: "/me2.jpeg",
     resume: "/Harshil_Maheshwari_Resume.pdf",
     email: "mharshil1234@gmail.com",
@@ -26,7 +26,7 @@ export const skills = [
     { category: "Tools & DevOps", items: ["Git", "Docker", "Linux", "Bash", "Vercel", "Cloudflare", "Google Cloud", "VS Code"] },
 ];
 
-export type ProjectLink = { label: "Frontend" | "Backend" | "GitHub" | "Live"; href: string };
+export type ProjectLink = { label: "Participant" | "Admin" | "Backend" | "GitHub" | "Live"; href: string };
 
 export type Project = {
     name: string;
@@ -39,13 +39,14 @@ export type Project = {
 
 export const projects: Project[] = [
     {
-        name: "Cookoff",
+        name: "Cookoff 11",
         subtitle: "Competitive Programming Platform",
         description:
-            "Led development of a full-stack contest platform for 500+ live participants, with an async Go + Judge0 code evaluation pipeline and real-time verdict delivery.",
+            "Led development of the contest platform for 500+ live participants: a participant portal, an admin panel for running the contest, and an async Go + Judge0 backend that judges code and delivers verdicts in real time.",
         tech: ["Next.js", "TypeScript", "Go", "PostgreSQL", "Redis", "Docker"],
         links: [
-            { label: "Frontend", href: "https://github.com/CodeChefVIT/cookoff-portal-11.0" },
+            { label: "Participant", href: "https://github.com/CodeChefVIT/cookoff-portal-11.0" },
+            { label: "Admin", href: "https://github.com/CodeChefVIT/cookoff-admin-11.0" },
             { label: "Backend", href: "https://github.com/CodeChefVIT/cookoff-11.0-be" },
         ],
         accent: "#fb923c",

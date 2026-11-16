@@ -14,7 +14,7 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
     const classified = project.links.length === 0;
 
     return (
-        <article className="project-card relative flex w-full shrink-0 md:h-[min(58vh,28rem)] md:w-[min(44rem,72vw)]">
+        <article className="project-card relative flex w-full shrink-0 md:min-h-[min(58vh,28rem)] md:w-[min(44rem,72vw)]">
             <div className="rod-l rod absolute -bottom-3 -top-3 left-0 z-10 w-4 rounded-full" />
             <div className="rod-r rod absolute -bottom-3 -top-3 right-0 z-10 w-4 rounded-full" />
 
@@ -144,7 +144,7 @@ export function Projects() {
 
     return (
         <section id="projects" ref={root} className="relative z-10 overflow-hidden py-24 md:flex md:h-screen md:items-center md:py-0">
-            <div ref={track} className="flex flex-col gap-12 px-6 md:flex-row md:items-center md:gap-12 md:pl-[8vw] md:pr-[8vw]">
+            <div ref={track} className="flex flex-col gap-12 px-6 md:flex-row md:items-stretch md:gap-12 md:pl-[8vw] md:pr-[8vw]">
                 {/* Intro panel */}
                 <div className="flex shrink-0 flex-col justify-center md:w-[min(30rem,48vw)]">
                     <SectionHeader number="04" label="Missions" title="Completed missions." accent="#fbbf24" />
