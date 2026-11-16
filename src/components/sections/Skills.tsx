@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { skills } from "@/data/content";
-import { RevealHeading, Stagger, TiltCard } from "@/components/ui/motion";
+import { Hanko, SectionHeader, Shuriken } from "@/components/ui/ninja";
 
-const ACCENTS = ["#fb923c", "#22d3ee", "#34d399", "#fbbf24"];
+const NUMERALS = ["I", "II", "III", "IV"];
 const ALL = skills.flatMap((g) => g.items);
 
 /** Infinite marquee whose speed and direction react to scroll velocity. */
@@ -16,17 +16,13 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
         () => {
             const el = track.current;
             if (!el) return;
-            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            if (reduce) return;
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-            // Track contains the list twice; loop over half its width.
             const loop = gsap.fromTo(
                 el,
                 { xPercent: reverse ? -50 : 0 },
                 { xPercent: reverse ? 0 : -50, duration: 40, ease: "none", repeat: -1 },
             );
-
-            // Scrolling boosts speed; scrolling up flips direction. Eases back to cruise speed.
             const st = ScrollTrigger.create({
                 start: 0,
                 end: "max",
@@ -37,7 +33,6 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
                     gsap.to(loop, { timeScale: sign, duration: 1.2, delay: 0.15 });
                 },
             });
-
             return () => {
                 st.kill();
                 loop.kill();
@@ -48,17 +43,61 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
 
     return (
         <div className="relative flex overflow-hidden py-3 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-            <div ref={track} className="flex shrink-0 gap-4 pr-4 will-change-transform">
+            <div ref={track} className="flex shrink-0 gap-6 pr-6 will-change-transform">
                 {[...items, ...items].map((s, i) => (
-                    <span
-                        key={i}
-                        className="flex shrink-0 items-center gap-4 text-5xl font-black tracking-tight text-white/90 sm:text-7xl"
-                    >
+                    <span key={i} className="flex shrink-0 items-center gap-6 text-5xl font-black tracking-tight text-white/90 sm:text-7xl">
                         {s}
-                        <span className="text-3xl text-orange-400 sm:text-5xl">✦</span>
+                        <Shuriken size={36} className="spin-slow text-orange-400" />
                     </span>
                 ))}
             </div>
+        </div>
+    );
+}
+
+/** A hanging scroll that unrolls downward when it scrolls into view. */
+function WeaponScroll({ group, index }: { group: (typeof skills)[number]; index: number }) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useGSAP(
+        () => {
+            const mm = gsap.matchMedia();
+            mm.add("(prefers-reduced-motion: no-preference)", () => {
+                const body = ref.current!.querySelector<HTMLElement>(".scroll-body")!;
+                gsap.timeline({ scrollTrigger: { trigger: ref.current, start: "top 85%" }, delay: index * 0.12 })
+                    .from(".scroll-body", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.9, ease: "power3.inOut" }, 0)
+                    .from(".scroll-bottom", { y: () => -body.offsetHeight, duration: 0.9, ease: "power3.inOut" }, 0)
+                    .from(".scroll-item", { opacity: 0, y: 8, stagger: 0.03, duration: 0.3 }, 0.5);
+            });
+            return () => mm.revert();
+        },
+        { scope: ref },
+    );
+
+    return (
+        <div ref={ref} className="group origin-top transition-transform duration-500 hover:rotate-[1.2deg]">
+            {/* hanging cord */}
+            <div className="mx-auto h-5 w-16 border-x border-t border-white/25 [border-radius:999px_999px_0_0]" />
+            <div className="rod-h relative z-10 -mx-2 h-3 rounded-full" />
+            <div className="scroll-body paper relative px-6 pb-8 pt-6 text-ink">
+                <div className="mb-5 flex items-start justify-between">
+                    <div>
+                        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/50">Technique {NUMERALS[index]}</p>
+                        <h3 className="mt-1 text-xl font-black">{group.category}</h3>
+                    </div>
+                    <Hanko size={34} rotate={index % 2 ? 5 : -5}>
+                        {NUMERALS[index]}
+                    </Hanko>
+                </div>
+                <ul className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                        <li key={item} className="scroll-item rounded-sm border border-ink/20 bg-ink/[0.04] px-2.5 py-1 text-sm font-medium text-ink/85">
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="scroll-bottom rod-h relative z-10 -mx-2 h-3 rounded-full" />
         </div>
     );
 }
@@ -69,8 +108,7 @@ export function Skills() {
     return (
         <section id="skills" className="relative z-10 py-32 sm:py-40">
             <div className="mx-auto mb-16 max-w-7xl px-6">
-                <p className="mb-4 font-mono text-sm uppercase tracking-[0.3em] text-cyan-300">02 — Skills</p>
-                <RevealHeading text="My toolbox." className="text-5xl font-black tracking-tight sm:text-7xl" />
+                <SectionHeader number="02" label="Arsenal" title="My arsenal." accent="#22d3ee" />
             </div>
 
             <div className="-rotate-2 space-y-2 border-y border-white/10 bg-white/[0.02] py-6">
@@ -78,33 +116,11 @@ export function Skills() {
                 <Marquee items={ALL.slice(half)} reverse />
             </div>
 
-            <Stagger className="mx-auto mt-24 grid max-w-7xl gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto mt-24 grid max-w-7xl items-start gap-x-8 gap-y-14 px-8 sm:grid-cols-2 lg:grid-cols-4">
                 {skills.map((group, i) => (
-                    <TiltCard key={group.category} className="reveal rounded-3xl" glare={`${ACCENTS[i]}33`}>
-                        <div
-                            className="h-full rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm"
-                            style={{ boxShadow: `inset 0 1px 0 ${ACCENTS[i]}55` }}
-                        >
-                            <div className="mb-6 flex items-center justify-between [transform:translateZ(30px)]">
-                                <h3 className="text-xl font-bold">{group.category}</h3>
-                                <span className="font-mono text-xs" style={{ color: ACCENTS[i] }}>
-                                    0{i + 1}
-                                </span>
-                            </div>
-                            <ul className="flex flex-wrap gap-2 [transform:translateZ(20px)]">
-                                {group.items.map((item) => (
-                                    <li
-                                        key={item}
-                                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition-colors hover:text-white"
-                                    >
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </TiltCard>
+                    <WeaponScroll key={group.category} group={group} index={i} />
                 ))}
-            </Stagger>
+            </div>
         </section>
     );
 }

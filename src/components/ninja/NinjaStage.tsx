@@ -269,9 +269,12 @@ export function NinjaStage({ variant, className = "" }: { variant: "intro" | "he
                 {!isHero && (
                     <g className="stamp" opacity={0} transform="translate(318 300)">
                         <rect x="-26" y="-26" width="52" height="52" rx="4" fill="#c4161c" filter={`url(#${id}-ink)`} />
-                        <text x="0" y="12" textAnchor="middle" fontSize="34" fontWeight="700" fill="#f3ebdd" fontFamily="serif">
-                            斬
-                        </text>
+                        <path
+                            transform="translate(-17 -17) scale(0.34)"
+                            d="M50 0 L61 39 L100 50 L61 61 L50 100 L39 61 L0 50 L39 39 Z M50 43 A7 7 0 1 0 50.01 43 Z"
+                            fill="#f3ebdd"
+                            fillRule="evenodd"
+                        />
                     </g>
                 )}
             </svg>

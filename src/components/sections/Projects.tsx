@@ -1,64 +1,74 @@
 "use client";
 
 import { useRef } from "react";
-import { FaArrowRight, FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
+import { FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { projects, socials, type Project } from "@/data/content";
-import { Magnetic, RevealHeading } from "@/components/ui/motion";
+import { Magnetic } from "@/components/ui/motion";
+import { Hanko, SectionHeader } from "@/components/ui/ninja";
 
 const github = socials.find((s) => s.label === "GitHub")!.href;
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+/** A horizontal makimono scroll: wooden rods at each end, rice paper between. */
+function MissionScroll({ project, index }: { project: Project; index: number }) {
+    const classified = project.links.length === 0;
+
     return (
-        <article
-            className="project-card group relative flex w-full shrink-0 md:h-[min(62vh,34rem)] flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0c0c] p-8 sm:p-10 md:w-[min(42rem,70vw)]"
-            style={{ ["--accent" as string]: project.accent }}
-        >
-            {/* Accent glow + giant index number */}
-            <div
-                className="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full opacity-30 blur-3xl transition-opacity duration-700 group-hover:opacity-60"
-                style={{ background: project.accent }}
-            />
-            <span
-                className="project-num pointer-events-none absolute -right-4 -top-10 select-none text-[12rem] font-black leading-none tracking-tighter opacity-10"
-                style={{ color: project.accent }}
-            >
-                0{index + 1}
-            </span>
+        <article className="project-card relative flex w-full shrink-0 md:h-[min(62vh,34rem)] md:w-[min(44rem,72vw)]">
+            <div className="rod-l rod absolute -bottom-3 -top-3 left-0 z-10 w-4 rounded-full" />
+            <div className="rod-r rod absolute -bottom-3 -top-3 right-0 z-10 w-4 rounded-full" />
 
-            <p className="relative font-mono text-xs uppercase tracking-[0.25em]" style={{ color: project.accent }}>
-                {project.subtitle}
-            </p>
-            <h3 className="relative mt-3 text-4xl font-black tracking-tight sm:text-6xl">{project.name}</h3>
-            <p className="relative mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">{project.description}</p>
+            <div className="paper-body paper relative mx-3 flex flex-1 flex-col overflow-hidden px-8 py-8 text-ink sm:px-10 sm:py-10">
+                {/* Mission number in brush ink */}
+                <span className="pointer-events-none absolute -right-2 -top-6 select-none text-[9rem] font-black leading-none text-ink/[0.06]">
+                    {index + 1}
+                </span>
 
-            <ul className="relative mt-8 flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                    <li key={t} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
-                        {t}
-                    </li>
-                ))}
-            </ul>
+                <p className="relative flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
+                    <span className="h-2.5 w-2.5 rotate-45" style={{ background: project.accent }} />
+                    Mission {String(index + 1).padStart(2, "0")} · {project.subtitle}
+                </p>
+                <h3 className="relative mt-3 text-4xl font-black tracking-tight sm:text-6xl">{project.name}</h3>
+                <p className="relative mt-5 max-w-xl text-base leading-relaxed text-ink/75 sm:text-lg">{project.description}</p>
 
-            <div className="relative mt-auto flex flex-wrap gap-3 pt-10">
-                {project.links.length === 0 && (
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-white/50">
-                        <FaLock size={12} /> Private repo
-                    </span>
-                )}
-                {project.links.map((link) => (
-                    <a
-                        key={link.href}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={link.label === "Live" ? `${project.name} live site` : `${project.name} ${link.label} on GitHub`}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-black"
-                    >
-                        {link.label === "Live" ? <FaExternalLinkAlt size={12} /> : <FaGithub size={14} />}
-                        {link.label}
-                    </a>
-                ))}
+                <ul className="relative mt-7 flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                        <li key={t} className="rounded-sm border border-ink/20 bg-ink/[0.04] px-2.5 py-1 text-xs font-medium text-ink/80">
+                            {t}
+                        </li>
+                    ))}
+                </ul>
+
+                <div className="relative mt-auto flex flex-wrap items-end justify-between gap-6 pt-8">
+                    <div className="flex flex-wrap gap-3">
+                        {classified && (
+                            <span className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 text-sm text-ink/55">
+                                <FaLock size={12} /> Private repo
+                            </span>
+                        )}
+                        {project.links.map((link) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={link.label === "Live" ? `${project.name} live site` : `${project.name} ${link.label} on GitHub`}
+                                className="inline-flex items-center gap-2 rounded-sm border border-ink/30 px-4 py-2 text-sm font-semibold transition-colors hover:bg-ink hover:text-paper"
+                            >
+                                {link.label === "Live" ? <FaExternalLinkAlt size={12} /> : <FaGithub size={14} />}
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                    <div className="mission-seal flex flex-col items-center gap-1.5">
+                        <Hanko size={58} rotate={index % 2 ? 7 : -7}>
+                            {classified ? <FaLock size={22} /> : <FaCheck size={24} />}
+                        </Hanko>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-seal/80">
+                            {classified ? "Classified" : "Complete"}
+                        </span>
+                    </div>
+                </div>
             </div>
         </article>
     );
@@ -72,7 +82,24 @@ export function Projects() {
         () => {
             const mm = gsap.matchMedia();
 
-            // Desktop: pin the section and scroll the cards horizontally.
+            /** Unroll: paper opens from the centre while the two rods slide apart; then the seal stamps. */
+            const unroll = (card: HTMLElement, scrollTrigger: ScrollTrigger.Vars, scrub: boolean) => {
+                const half = () => card.offsetWidth / 2 - 8;
+                const tl = gsap.timeline({ scrollTrigger: { ...scrollTrigger, scrub: scrub ? true : undefined } });
+                tl.fromTo(card.querySelector(".paper-body"), { clipPath: "inset(0% 50% 0% 50%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.out" }, 0)
+                    .fromTo(card.querySelector(".rod-l"), { x: half }, { x: 0, ease: "power2.out" }, 0)
+                    .fromTo(card.querySelector(".rod-r"), { x: () => -half() }, { x: 0, ease: "power2.out" }, 0)
+                    .fromTo(
+                        card.querySelector(".mission-seal"),
+                        { scale: 2.4, opacity: 0, rotate: -20 },
+                        { scale: 1, opacity: 1, rotate: 0, ease: "power4.in", duration: 0.25 },
+                        scrub ? 0.85 : ">-0.1",
+                    );
+                if (!scrub) tl.duration(1.2);
+                return tl;
+            };
+
+            // Desktop: pin the section and scroll the scrolls horizontally.
             mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
                 const el = track.current!;
                 const distance = () => el.scrollWidth - window.innerWidth;
@@ -90,31 +117,9 @@ export function Projects() {
                     },
                 });
 
-                // Each card tilts/scales into focus as it crosses the viewport
-                gsap.utils.toArray<HTMLElement>(".project-card").forEach((card) => {
-                    gsap.fromTo(
-                        card,
-                        { rotateY: -18, scale: 0.88, opacity: 0.4 },
-                        {
-                            rotateY: 0,
-                            scale: 1,
-                            opacity: 1,
-                            ease: "power2.out",
-                            scrollTrigger: {
-                                trigger: card,
-                                containerAnimation: tween,
-                                start: "left 95%",
-                                end: "left 45%",
-                                scrub: true,
-                            },
-                        },
-                    );
-                    gsap.to(card.querySelector(".project-num"), {
-                        xPercent: -40,
-                        ease: "none",
-                        scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
-                    });
-                });
+                gsap.utils.toArray<HTMLElement>(".project-card").forEach((card) =>
+                    unroll(card, { trigger: card, containerAnimation: tween, start: "left 92%", end: "left 45%" }, true),
+                );
 
                 gsap.to(".projects-bar", {
                     scaleX: 1,
@@ -123,11 +128,9 @@ export function Projects() {
                 });
             });
 
-            // Mobile / reduced motion: simple vertical reveal.
-            mm.add("(max-width: 767px), (prefers-reduced-motion: reduce)", () => {
-                gsap.utils.toArray<HTMLElement>(".project-card").forEach((card) => {
-                    gsap.from(card, { y: 60, opacity: 0, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: card, start: "top 88%" } });
-                });
+            // Mobile: each scroll unrolls once as it enters.
+            mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+                gsap.utils.toArray<HTMLElement>(".project-card").forEach((card) => unroll(card, { trigger: card, start: "top 85%" }, false));
             });
 
             return () => mm.revert();
@@ -137,24 +140,23 @@ export function Projects() {
 
     return (
         <section id="projects" ref={root} className="relative z-10 overflow-hidden py-24 md:flex md:h-screen md:items-center md:py-0">
-            <div ref={track} className="flex flex-col gap-8 px-6 md:flex-row md:items-stretch md:gap-10 md:pl-[8vw] md:pr-[8vw] md:[perspective:1400px]">
+            <div ref={track} className="flex flex-col gap-12 px-6 md:flex-row md:items-center md:gap-12 md:pl-[8vw] md:pr-[8vw]">
                 {/* Intro panel */}
                 <div className="flex shrink-0 flex-col justify-center md:w-[min(30rem,40vw)]">
-                    <p className="mb-4 font-mono text-sm uppercase tracking-[0.3em] text-amber-300">04 — Projects</p>
-                    <RevealHeading text="Selected work." className="text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl" />
+                    <SectionHeader number="04" label="Missions" title="Completed missions." accent="#fbbf24" />
                     <p className="mt-6 max-w-sm text-white/60">
-                        Things I&apos;ve built and shipped — from contest infrastructure to real-time social apps.
+                        Things I&apos;ve built and shipped, from contest infrastructure to real-time social apps.
                         <span className="hidden md:inline"> Keep scrolling →</span>
                     </p>
                 </div>
 
                 {projects.map((p, i) => (
-                    <ProjectCard key={p.name} project={p} index={i} />
+                    <MissionScroll key={p.name} project={p} index={i} />
                 ))}
 
                 {/* Outro panel */}
                 <div className="flex shrink-0 flex-col items-start justify-center gap-6 md:w-[min(26rem,35vw)] md:items-center md:text-center">
-                    <p className="text-3xl font-black tracking-tight sm:text-4xl">Want to see more?</p>
+                    <p className="text-3xl font-black tracking-tight sm:text-4xl">More missions on GitHub.</p>
                     <Magnetic>
                         <a
                             href={github}
@@ -172,7 +174,7 @@ export function Projects() {
             </div>
 
             <div className="absolute inset-x-[8vw] bottom-10 hidden h-px bg-white/10 md:block">
-                <div className="projects-bar h-full origin-left scale-x-0 bg-gradient-to-r from-orange-400 via-cyan-300 to-amber-300" />
+                <div className="projects-bar h-full origin-left scale-x-0 bg-gradient-to-r from-red-500 via-orange-400 to-amber-300" />
             </div>
         </section>
     );

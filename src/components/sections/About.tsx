@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { profile } from "@/data/content";
-import { RevealHeading, ScrubText, TiltCard } from "@/components/ui/motion";
+import { ScrubText, TiltCard } from "@/components/ui/motion";
+import { Hanko, SectionHeader, Shuriken } from "@/components/ui/ninja";
 
 const STATS = [
     { value: 500, suffix: "+", label: "live contestants on Cookoff" },
@@ -22,30 +23,23 @@ export function About() {
                 // Photo parallax inside its frame
                 gsap.fromTo(
                     ".about-photo",
-                    { yPercent: -12, scale: 1.2 },
+                    { yPercent: -10, scale: 1.2 },
                     {
-                        yPercent: 12,
-                        scale: 1.05,
+                        yPercent: 10,
+                        scale: 1.08,
                         ease: "none",
                         scrollTrigger: { trigger: ".about-frame", start: "top bottom", end: "bottom top", scrub: true },
                     },
                 );
-                // Frame clip-path wipe in
+                // Ink wash reveal: the frame bleeds in from top to bottom
                 gsap.from(".about-frame", {
-                    clipPath: "inset(100% 0% 0% 0% round 2rem)",
+                    clipPath: "inset(0% 0% 100% 0%)",
                     duration: 1.4,
                     ease: "expo.inOut",
                     scrollTrigger: { trigger: ".about-frame", start: "top 85%" },
                 });
-                // Floating sticker spins with scroll
-                gsap.to(".about-sticker", {
-                    rotate: 360,
-                    ease: "none",
-                    scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: 1 },
-                });
             });
 
-            // Counters (run regardless of motion preference, just instantly if reduced)
             gsap.utils.toArray<HTMLElement>(".stat-num").forEach((el) => {
                 const end = Number(el.dataset.value);
                 const obj = { v: 0 };
@@ -66,37 +60,29 @@ export function About() {
     return (
         <section id="about" ref={root} className="relative z-10 px-6 py-32 sm:py-40">
             <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-[5fr_7fr] lg:gap-24">
-                <TiltCard className="mx-auto w-full max-w-md rounded-[2rem]" max={8}>
-                    <div className="about-frame relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-white/5">
+                <TiltCard className="mx-auto w-full max-w-md" max={6}>
+                    <div className="about-frame relative aspect-[4/5] overflow-hidden bg-white/5">
                         <Image
                             src={profile.photo}
                             alt={profile.name}
                             fill
                             sizes="(min-width: 768px) 40vw, 90vw"
-                            className="about-photo object-cover will-change-transform"
-                            priority={false}
+                            className="about-photo object-cover grayscale-[35%] will-change-transform"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(5,5,5,0.7))]" />
                     </div>
-                    <div className="absolute -right-6 -top-6 [transform:translateZ(60px)]">
-                        <div
-                            className="about-sticker flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 text-center text-xs font-black uppercase leading-tight text-black shadow-xl"
-                        >
-                            Full
-                            <br />
-                            Stack
-                            <br />
-                            Dev ✦
-                        </div>
+                    {/* Torn ink-brush frame over the photo edges */}
+                    <div className="pointer-events-none absolute -inset-2 border-[14px] border-[#050505] [filter:url(#ink-rough)]" aria-hidden />
+                    <div className="absolute -right-5 -top-5 [transform:translateZ(60px)]">
+                        <Hanko size={92} rotate={-8} stamp>
+                            <Shuriken size={52} />
+                        </Hanko>
                     </div>
                 </TiltCard>
 
                 <div>
-                    <p className="mb-4 font-mono text-sm uppercase tracking-[0.3em] text-orange-300">01 — About</p>
-                    <RevealHeading
-                        text="I make the web feel alive."
-                        className="mb-10 text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl"
-                    />
+                    <SectionHeader number="01" label="The Shinobi" title="I make the web feel alive." className="mb-10" />
                     <ScrubText text={profile.about} className="text-2xl font-medium leading-snug text-white sm:text-3xl" />
 
                     <div className="mt-14 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">

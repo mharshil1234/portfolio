@@ -6,7 +6,7 @@ export const profile = {
     tagline:
         "Passionate about building software that solves real problems. I enjoy learning new technologies, exploring ideas and turning them into meaningful projects.",
     about:
-        "I build things for the web end to end — from real-time Go backends that judge code for hundreds of live contestants, to polished React interfaces people actually enjoy using. I care about systems that stay fast under load, interfaces that feel alive, and shipping work that solves a real problem.",
+        "I build things for the web end to end, from real-time Go backends that judge code for hundreds of live contestants, to polished React interfaces people actually enjoy using. I care about systems that stay fast under load, interfaces that feel alive, and shipping work that solves a real problem.",
     photo: "/me.jpeg",
     resume: "/Harshil_Maheshwari_Resume.pdf",
     email: "mharshil1234@gmail.com",
@@ -87,7 +87,7 @@ export const clubs = [
         image: "/ccvit.png",
         description:
             "Competitive Programming & Web Development Member. Contributing to project cycles and helped organize and judge a hackathon with 1,000+ participants.",
-        period: "Jan 2026 – Present",
+        period: "Jan 2026 - Present",
         website: "https://www.codechefvit.com/",
         github: "https://github.com/CodeChefVIT",
         linkedin: "https://www.linkedin.com/company/codechefvit/",
@@ -98,7 +98,7 @@ export const clubs = [
         image: "/acmvit.png",
         description:
             "Competitive Programming Member. Contributed to organizing coding competitions and workshops, fostering a vibrant programming community on campus.",
-        period: "Jan 2026 – Present",
+        period: "Jan 2026 - Present",
         website: "https://www.acmvit.in/",
         github: "https://github.com/ACM-VIT",
         linkedin: "https://www.linkedin.com/company/acmvit/",

@@ -61,7 +61,7 @@ export function Navbar() {
                 >
                     <button
                         onClick={() => go("hero")}
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-black tracking-tight text-black"
+                        className="flex h-10 w-10 -rotate-6 items-center justify-center rounded-[6px] bg-seal text-sm font-black tracking-tight text-paper shadow-[0_4px_14px_rgba(196,22,28,0.4)] transition-transform [filter:url(#ink-rough)] hover:rotate-0"
                         aria-label="Back to top"
                     >
                         HM
@@ -72,14 +72,14 @@ export function Navbar() {
                             <li key={s.id}>
                                 <button
                                     onClick={() => go(s.id)}
-                                    className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                                    className={`relative px-4 py-2 text-sm font-medium transition-colors ${
                                         active === s.id ? "text-black" : "text-white/60 hover:text-white"
                                     }`}
                                 >
                                     {active === s.id && (
                                         <motion.span
-                                            layoutId="nav-pill"
-                                            className="absolute inset-0 -z-10 rounded-full bg-white"
+                                            layoutId="nav-brush"
+                                            className="brush-swipe absolute -inset-x-1 inset-y-0 -z-10"
                                             transition={{ type: "spring", stiffness: 400, damping: 32 }}
                                         />
                                     )}
@@ -116,7 +116,7 @@ export function Navbar() {
                         animate={{ clipPath: "circle(150% at 100% 0%)" }}
                         exit={{ clipPath: "circle(0% at 100% 0%)" }}
                         transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                        className="fixed inset-0 z-40 flex flex-col justify-center bg-gradient-to-br from-orange-600 via-red-700 to-[#050505] px-8 md:hidden"
+                        className="fixed inset-0 z-40 flex flex-col justify-center bg-gradient-to-br from-red-800 via-[#3a0d0d] to-[#050505] px-8 md:hidden"
                     >
                         {navSections.map((s, i) => (
                             <motion.button

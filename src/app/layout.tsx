@@ -9,7 +9,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Harshil Maheshwari — Full Stack Developer",
+    title: "Harshil Maheshwari | Full Stack Developer",
     description: "Portfolio of Harshil Maheshwari showcasing projects, clubs and expertise",
 };
 
