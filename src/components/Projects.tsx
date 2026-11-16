@@ -32,6 +32,13 @@ const projects = [
     },
 ];
 
+const accentColors = [
+    { border: 'border-t-purple-500/40', subtitle: 'text-purple-300/80', glow: 'rgba(168,85,247,0.06)' },
+    { border: 'border-t-cyan-500/40', subtitle: 'text-cyan-300/80', glow: 'rgba(6,182,212,0.06)' },
+    { border: 'border-t-emerald-500/40', subtitle: 'text-emerald-300/80', glow: 'rgba(16,185,129,0.06)' },
+    { border: 'border-t-amber-500/40', subtitle: 'text-amber-300/80', glow: 'rgba(245,158,11,0.06)' },
+];
+
 const container: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.08 } },
@@ -74,12 +81,17 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                     viewport={{ once: true, amount: 0.2 }}
                     className="flex flex-wrap justify-center gap-8"
                 >
-                    {projects.map((project) => (
+                    {projects.map((project, index) => {
+                        const accent = accentColors[index % accentColors.length];
+                        return (
                         <motion.article
                             key={project.name}
                             variants={card}
                             whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                            className="group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] border-t-2 border-t-purple-500/40 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-500 w-full max-w-md flex flex-col"
+                            className={`group bg-gray-800/30 backdrop-blur-sm border border-white/[0.06] border-t-2 ${accent.border} p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-500 w-full max-w-md flex flex-col relative overflow-hidden`}
+                            style={{ boxShadow: `0 0 0 0 ${accent.glow}` }}
+                            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 30px ${accent.glow}`; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 0 0 ${accent.glow}`; }}
                         >
                             <div className="flex items-start justify-between gap-4 mb-1">
                                 <h3 className="text-2xl font-bold text-white">{project.name}</h3>
@@ -99,7 +111,7 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                                     ))}
                                 </div>
                             </div>
-                            <p className="text-sm text-purple-300/80 mb-4">{project.subtitle}</p>
+                            <p className={`text-sm ${accent.subtitle} mb-4`}>{project.subtitle}</p>
                             <p className="text-gray-300 text-sm leading-relaxed mb-6">{project.description}</p>
                             {project.tech.length > 0 && (
                             <div className="flex flex-wrap gap-2 mt-auto">
@@ -114,7 +126,8 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                             </div>
                             )}
                         </motion.article>
-                    ))}
+                        );
+                    })}
                 </motion.div>
 
                 <div className="flex justify-center mt-12">
