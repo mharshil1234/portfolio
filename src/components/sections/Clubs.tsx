@@ -16,9 +16,10 @@ function ClanBanner({ club, index }: { club: (typeof clubs)[number]; index: numb
         () => {
             const mm = gsap.matchMedia();
             mm.add("(prefers-reduced-motion: no-preference)", () => {
-                gsap.timeline({ scrollTrigger: { trigger: ref.current, start: "top 80%" }, delay: index * 0.2 })
-                    .from(".banner-cloth", { clipPath: "inset(0% 0% 100% 0%)", duration: 1.1, ease: "power3.inOut" })
-                    .from(".banner-content > *", { opacity: 0, y: 14, stagger: 0.06, duration: 0.4 }, "-=0.4");
+                // Starts as soon as the banner peeks into view and finishes quickly
+                gsap.timeline({ scrollTrigger: { trigger: ref.current, start: "top 95%" }, delay: index * 0.08 })
+                    .from(".banner-cloth", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.6, ease: "power3.out" })
+                    .from(".banner-content > *", { opacity: 0, y: 10, stagger: 0.04, duration: 0.3 }, 0.2);
                 gsap.to(".banner-sway", {
                     rotate: index % 2 ? -0.8 : 0.8,
                     skewY: index % 2 ? 0.4 : -0.4,
@@ -56,7 +57,7 @@ function ClanBanner({ club, index }: { club: (typeof clubs)[number]; index: numb
                     <div className="relative flex h-32 items-center justify-center" style={{ background: `${club.accent}26` }}>
                         <div className="relative h-20 w-20 rounded-full bg-paper p-3 shadow-[0_0_0_4px_rgba(255,255,255,0.08)]">
                             <div className="relative h-full w-full">
-                                <Image src={club.image} alt={`${club.name} logo`} fill sizes="80px" className="object-contain" />
+                                <Image src={club.image} alt={`${club.name} logo`} fill sizes="80px" loading="eager" className="object-contain" />
                             </div>
                         </div>
                     </div>
