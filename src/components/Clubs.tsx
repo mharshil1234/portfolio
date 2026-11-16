@@ -38,6 +38,7 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
             name: 'CodeChef-VIT',
             image: '/ccvit.png',
             description: 'Competitive Programming & Web Development Member. Contributing to project cycles and helped organize and judge a hackathon with 1,000+ participants.',
+            period: 'Jan 2026 – Present',
             website: 'https://www.codechefvit.com/',
             github: 'https://github.com/CodeChefVIT',
             linkedin: 'https://www.linkedin.com/company/codechefvit/',
@@ -46,6 +47,7 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
             name: 'ACM-VIT',
             image: '/acmvit.png',
             description: 'Competitive Programming Member. Contributed to organizing coding competitions and workshops, fostering a vibrant programming community on campus.',
+            period: 'Jan 2026 – Present',
             website: 'https://www.acmvit.in/',
             github: 'https://github.com/ACM-VIT',
             linkedin: 'https://www.linkedin.com/company/acmvit/',
@@ -96,6 +98,7 @@ const Clubs = forwardRef<HTMLElement>((_, ref) => {
                                 name={club.name}
                                 image={club.image}
                                 description={club.description}
+                                period={club.period}
                                 website={club.website}
                                 github={club.github}
                                 linkedin={club.linkedin}

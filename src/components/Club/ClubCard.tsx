@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FiExternalLink, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiLinkedin, FiCalendar } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 interface ClubCardProps {
     name: string;
     image: string;
     description: string;
+    period?: string;
     website?: string;
     github?: string;
     linkedin?: string;
@@ -15,6 +16,7 @@ const ClubCard: React.FC<ClubCardProps> = ({
     name,
     image,
     description,
+    period,
     website,
     github,
     linkedin,
@@ -57,11 +59,21 @@ const ClubCard: React.FC<ClubCardProps> = ({
                 </motion.div>
 
                 <h3
-                    className="text-2xl font-bold mb-4"
+                    className={`text-2xl font-bold ${period ? "mb-2" : "mb-4"}`}
                     style={{ transform: "translateZ(20px)" }}
                 >
                     {name}
                 </h3>
+
+                {period && (
+                    <span
+                        className="inline-flex items-center gap-1.5 mb-4 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] text-xs font-medium text-gray-300"
+                        style={{ transform: "translateZ(15px)" }}
+                    >
+                        <FiCalendar className="text-[11px]" />
+                        {period}
+                    </span>
+                )}
 
                 <p
                     className="text-gray-300 mb-6 text-sm leading-relaxed"

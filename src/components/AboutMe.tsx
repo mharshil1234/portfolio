@@ -2,6 +2,7 @@
 
 import React, { forwardRef, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaFileDownload } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
 import { motion, type Variants } from "framer-motion";
 import { HMLogo } from "./HMLogo";
 import { ShatterPhoto } from "./ShatterPhoto";
@@ -135,6 +136,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                                 {[
                                     { icon: <FaGithub size={28} />, href: "https://github.com/mharshil1234", color: "hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]" },
                                     { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/harshil-maheshwari/", color: "hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]" },
+                                    { icon: <SiLeetcode size={26} />, href: "https://leetcode.com/u/mharshil1234/", color: "hover:shadow-[0_0_20px_rgba(255,161,22,0.3)]" },
                                     { icon: <FaEnvelope size={28} />, href: "mailto:mharshil1234@gmail.com", color: "hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]" },
                                 ].map((item, index) => (
                                     <motion.a
@@ -161,7 +163,7 @@ const AboutMe = forwardRef<HTMLElement>((_, ref) => {
                                     download
                                     initial={{ opacity: 0, scale: 0.5, y: 10 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    transition={{ delay: 2.45, duration: 0.3 }}
+                                    transition={{ delay: 2.6, duration: 0.3 }}
                                     whileHover={{
                                         y: -4,
                                         scale: 1.05,
