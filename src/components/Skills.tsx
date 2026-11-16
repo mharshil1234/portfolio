@@ -66,7 +66,7 @@ const Skills = forwardRef<HTMLElement>((_, ref) => {
         { category: "Languages", items: ["Java", "C++", "JavaScript", "TypeScript", "Python", "Go"] },
         { category: "Frontend", items: ["React", "Next.js", "Vite", "Tailwind CSS", "HTML", "CSS"] },
         { category: "Backend", items: ["Node.js", "Express.js", "PostgreSQL", "MongoDB", "Redis", "Prisma", "Supabase"] },
-        { category: "Tools & DevOps", items: ["Git", "Docker", "Linux", "Bash", "Vercel", "VS Code"] },
+        { category: "Tools & DevOps", items: ["Git", "Docker", "Linux", "Bash", "Vercel", "Cloudflare", "Google Cloud", "VS Code"] },
     ];
 
     return (
