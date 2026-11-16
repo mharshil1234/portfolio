@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaLock } from 'react-icons/fa';
 
 const projects = [
     {
@@ -29,6 +29,14 @@ const projects = [
             'Worked on the frontend of the platform VIT runs its capstone and course projects on, handling every stage from team formation through to final grading.',
         tech: [] as string[],
         links: [{ label: 'Live', href: 'https://vcap.vit.ac.in/' }],
+    },
+    {
+        name: 'GitHub-Org-Tool',
+        subtitle: 'GitHub Organization Management Tool',
+        description:
+            'GraphQL-based tool for managing GitHub organizations, with bulk member invitations and configurable custom scoring rules.',
+        tech: ['Next.js', 'React', 'Tailwind CSS', 'Supabase', 'GraphQL', 'GitHub Apps API'],
+        links: [] as { label: string; href: string }[],
     },
 ];
 
@@ -96,6 +104,12 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                             <div className="flex items-start justify-between gap-4 mb-1">
                                 <h3 className="text-2xl font-bold text-white">{project.name}</h3>
                                 <div className="flex items-center gap-3 mt-1.5 shrink-0">
+                                    {project.links.length === 0 && (
+                                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500">
+                                            <FaLock size={11} />
+                                            <span>Private repo</span>
+                                        </span>
+                                    )}
                                     {project.links.map((link) => (
                                         <a
                                             key={link.href}
