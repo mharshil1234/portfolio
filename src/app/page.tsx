@@ -1,40 +1,30 @@
-'use client';
-
-import { useRef } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { AboutMe } from '@/components/AboutMe';
-import { Skills } from '@/components/Skills';
-import { Clubs } from '@/components/Clubs';
-import { Projects } from '@/components/Projects';
-import { ContactMe } from '@/components/ContactMe';
-import { Footer } from '@/components/Footer';
-// import { ScrollRoadmap } from '@/components/ScrollRoadmap';
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { Cursor, ScrollProgress } from "@/components/ui/Chrome";
+import { Hero } from "@/components/sections/Hero";
+import { About } from "@/components/sections/About";
+import { Skills } from "@/components/sections/Skills";
+import { Clubs } from "@/components/sections/Clubs";
+import { Projects } from "@/components/sections/Projects";
+import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
-  const aboutRef = useRef<HTMLElement>(null);
-  const skillsRef = useRef<HTMLElement>(null);
-  const clubsRef = useRef<HTMLElement>(null);
-  const projectsRef = useRef<HTMLElement>(null);
-  const contactRef = useRef<HTMLElement>(null);
-
-  return (
-    <div className="page-wrapper">
-      {/* <ScrollRoadmap /> */}
-      <Navbar
-        aboutRef={aboutRef}
-        skillsRef={skillsRef}
-        clubsRef={clubsRef}
-        projectsRef={projectsRef}
-        contactRef={contactRef}
-      />
-      <div className="pt-4">
-        <AboutMe ref={aboutRef} />
-        <Skills ref={skillsRef} />
-        <Clubs ref={clubsRef} />
-        <Projects ref={projectsRef} />
-        <ContactMe ref={contactRef} />
-      </div>
-      <Footer />
-    </div>
-  );
+    return (
+        <>
+            <div className="ambient" aria-hidden />
+            <div className="grain" aria-hidden />
+            <ScrollProgress />
+            <Cursor />
+            <Navbar />
+            <main className="relative z-10">
+                <Hero />
+                <About />
+                <Skills />
+                <Clubs />
+                <Projects />
+                <Contact />
+            </main>
+            <Footer />
+        </>
+    );
 }
