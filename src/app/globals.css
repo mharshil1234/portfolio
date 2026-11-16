@@ -173,3 +173,17 @@ body {
 body {
     overflow-x: clip;
 }
+
+/*
+ * Keep the page width fixed when Lenis is stopped (the mobile menu does this).
+ * Lenis' default `overflow: clip` drops the scrollbar, which widens the page, rewraps
+ * the text and shifts every section, so menu links landed in the wrong place.
+ * `hidden` + a reserved gutter stops scrolling without changing the layout.
+ */
+html {
+    scrollbar-gutter: stable;
+}
+
+html.lenis.lenis-stopped {
+    overflow: hidden;
+}

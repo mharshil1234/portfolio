@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navSections, profile } from "@/data/content";
@@ -11,6 +11,8 @@ export function Navbar() {
     const [hidden, setHidden] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [open, setOpen] = useState(false);
+    // Section picked from the mobile menu, scrolled to once the menu has closed.
+    const pending = useRef<HTMLElement | null>(null);
 
     // Hide when scrolling down, reveal when scrolling up.
     useLenis(({ scroll, direction }) => {
@@ -33,17 +35,36 @@ export function Navbar() {
         return () => io.disconnect();
     }, []);
 
+    // The menu stops Lenis while open (a stopped Lenis ignores scrollTo, and the page
+    // layout is different while stopped). So a link tapped in the menu is only scrolled
+    // to here, after the menu has closed and Lenis is running again.
     useEffect(() => {
-        if (open) lenis?.stop();
-        else lenis?.start();
+        if (open) {
+            lenis?.stop();
+            return;
+        }
+        lenis?.start();
+        const target = pending.current;
+        if (!target) return;
+        pending.current = null;
+        const id = requestAnimationFrame(() => {
+            if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.4, force: true });
+            else target.scrollIntoView({ behavior: "smooth" });
+        });
+        return () => cancelAnimationFrame(id);
     }, [open, lenis]);
 
     const go = (id: string) => {
-        setOpen(false);
         const target = document.getElementById(id);
         if (!target) return;
-        if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.4 });
-        else target.scrollIntoView({ behavior: "smooth" });
+        if (open) {
+            pending.current = target;
+            setOpen(false);
+        } else if (lenis) {
+            lenis.scrollTo(target, { offset: 0, duration: 1.4 });
+        } else {
+            target.scrollIntoView({ behavior: "smooth" });
+        }
     };
 
     return (
