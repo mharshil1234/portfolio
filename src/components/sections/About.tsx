@@ -47,7 +47,7 @@ export function About() {
                             alt={profile.name}
                             fill
                             sizes="(min-width: 768px) 40vw, 90vw"
-                            className="about-photo object-cover grayscale-[35%] will-change-transform"
+                            className="about-photo object-cover object-[50%_15%] grayscale-[35%] will-change-transform"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent" />
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(5,5,5,0.7))]" />

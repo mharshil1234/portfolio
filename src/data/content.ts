@@ -7,7 +7,7 @@ export const profile = {
         "Passionate about building software that solves real problems. I enjoy learning new technologies, exploring ideas and turning them into meaningful projects.",
     about:
         "I build things for the web end to end, from real-time Go backends that judge code for hundreds of live contestants, to polished React interfaces people actually enjoy using. I care about systems that stay fast under load, interfaces that feel alive, and shipping work that solves a real problem.",
-    photo: "/me.jpeg",
+    photo: "/me2.jpeg",
     resume: "/Harshil_Maheshwari_Resume.pdf",
     email: "mharshil1234@gmail.com",
 };
