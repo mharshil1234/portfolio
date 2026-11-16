@@ -161,7 +161,7 @@ export function Projects() {
                 ))}
 
                 {/* Outro panel */}
-                <div className="flex shrink-0 flex-col items-start justify-center gap-6 md:w-[min(26rem,35vw)] md:items-center md:text-center">
+                <div className="flex shrink-0 flex-col items-center justify-center gap-6 text-center md:w-[min(26rem,35vw)]">
                     <p className="text-3xl font-black tracking-tight sm:text-4xl">More missions on GitHub.</p>
                     <Magnetic>
                         <a
