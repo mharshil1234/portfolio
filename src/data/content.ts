@@ -35,6 +35,8 @@ export type Project = {
     tech: string[];
     links: ProjectLink[];
     accent: string;
+    /** Still being built: shows an "In progress" seal instead of "Complete". */
+    inProgress?: boolean;
 };
 
 export const projects: Project[] = [
@@ -76,6 +78,7 @@ export const projects: Project[] = [
             "GraphQL-based tool for managing GitHub organizations, with bulk member invitations and configurable custom scoring rules.",
         tech: ["Next.js", "React", "Tailwind CSS", "Supabase", "GraphQL", "GitHub Apps API"],
         links: [],
+        inProgress: true,
         accent: "#f87171",
     },
 ];

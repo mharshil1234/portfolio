@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
+import { FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub, FaHourglassHalf, FaLock } from "react-icons/fa";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { projects, socials, type Project } from "@/data/content";
 import { Magnetic } from "@/components/ui/motion";
@@ -11,7 +11,7 @@ const github = socials.find((s) => s.label === "GitHub")!.href;
 
 /** A horizontal makimono scroll: wooden rods at each end, rice paper between. */
 function MissionScroll({ project, index }: { project: Project; index: number }) {
-    const classified = project.links.length === 0;
+    const privateRepo = project.links.length === 0;
 
     return (
         <article className="project-card relative flex w-full shrink-0 md:min-h-[min(58vh,28rem)] md:w-[min(44rem,72vw)]">
@@ -45,7 +45,7 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
 
                 <div className="relative mt-auto flex items-end justify-between gap-4 pt-8">
                     <div className="flex flex-wrap gap-3">
-                        {classified && (
+                        {privateRepo && (
                             <span className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 text-sm text-ink/55">
                                 <FaLock size={12} /> Private repo
                             </span>
@@ -66,10 +66,10 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
                     </div>
                     <div className="mission-seal flex flex-col items-center gap-1.5">
                         <Hanko size={58} rotate={index % 2 ? 7 : -7}>
-                            {classified ? <FaLock size={22} /> : <FaCheck size={24} />}
+                            {project.inProgress ? <FaHourglassHalf size={22} /> : <FaCheck size={24} />}
                         </Hanko>
                         <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-seal/80">
-                            {classified ? "Classified" : "Complete"}
+                            {project.inProgress ? "In progress" : "Complete"}
                         </span>
                     </div>
                 </div>
