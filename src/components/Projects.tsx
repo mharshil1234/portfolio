@@ -27,7 +27,7 @@ const projects = [
         subtitle: 'VIT Capstone Project Platform',
         description:
             'Worked on the frontend of the platform VIT runs its capstone and course projects on, handling every stage from team formation through to final grading.',
-        tech: [] as string[],
+        tech: ['Next.js', 'React', 'Tailwind CSS', 'shadcn/ui', 'TanStack Query', 'Zustand'],
         links: [{ label: 'Live', href: 'https://vcap.vit.ac.in/' }],
     },
     {
