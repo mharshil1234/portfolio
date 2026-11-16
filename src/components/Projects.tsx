@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const projects = [
     {
@@ -21,6 +21,14 @@ const projects = [
             'Restaurant discovery app that uses Gemini to turn free-text cravings into matching dishes, with real-time multiplayer Mood Rooms for group voting over Socket.IO.',
         tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Redis', 'Socket.IO'],
         links: [{ label: 'GitHub', href: 'https://github.com/mharshil1234/crave-buddy' }],
+    },
+    {
+        name: 'VCAP',
+        subtitle: 'VIT Capstone Project Platform',
+        description:
+            'Worked on the frontend of the platform VIT runs its capstone and course projects on, handling every stage from team formation through to final grading.',
+        tech: [] as string[],
+        links: [{ label: 'Live', href: 'https://vcap.vit.ac.in/' }],
     },
 ];
 
@@ -82,10 +90,10 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                                             href={link.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label={`${project.name} ${link.label} on GitHub`}
+                                            aria-label={link.label === 'Live' ? `${project.name} live site` : `${project.name} ${link.label} on GitHub`}
                                             className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 hover:text-white transition-colors"
                                         >
-                                            <FaGithub size={16} />
+                                            {link.label === 'Live' ? <FaExternalLinkAlt size={13} /> : <FaGithub size={16} />}
                                             <span>{link.label}</span>
                                         </a>
                                     ))}
@@ -93,6 +101,7 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                             </div>
                             <p className="text-sm text-purple-300/80 mb-4">{project.subtitle}</p>
                             <p className="text-gray-300 text-sm leading-relaxed mb-6">{project.description}</p>
+                            {project.tech.length > 0 && (
                             <div className="flex flex-wrap gap-2 mt-auto">
                                 {project.tech.map((t) => (
                                     <span
@@ -103,6 +112,7 @@ const Projects = forwardRef<HTMLElement>((_, ref) => {
                                     </span>
                                 ))}
                             </div>
+                            )}
                         </motion.article>
                     ))}
                 </motion.div>
