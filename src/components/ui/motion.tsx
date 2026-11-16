@@ -14,6 +14,7 @@ export function RevealHeading({
     className = "",
     delay = 0,
     onLoad = false,
+    play = true,
 }: {
     text: string;
     as?: ElementType;
@@ -21,6 +22,8 @@ export function RevealHeading({
     delay?: number;
     /** Animate immediately on mount instead of on scroll. */
     onLoad?: boolean;
+    /** With onLoad: hold the characters hidden until this becomes true. */
+    play?: boolean;
 }) {
     const ref = useRef<HTMLElement>(null);
 
@@ -28,6 +31,10 @@ export function RevealHeading({
         () => {
             const mm = gsap.matchMedia();
             mm.add(MOTION_OK, () => {
+                if (!play) {
+                    gsap.set(".rh-char", { yPercent: 115, rotate: 8 });
+                    return;
+                }
                 gsap.from(".rh-char", {
                     yPercent: 115,
                     rotate: 8,
@@ -40,7 +47,7 @@ export function RevealHeading({
             });
             return () => mm.revert();
         },
-        { scope: ref },
+        { scope: ref, dependencies: [play], revertOnUpdate: true },
     );
 
     return (

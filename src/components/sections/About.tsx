@@ -81,7 +81,6 @@ export function About() {
                     <div className="absolute -right-6 -top-6 [transform:translateZ(60px)]">
                         <div
                             className="about-sticker flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 text-center text-xs font-black uppercase leading-tight text-black shadow-xl"
-                            data-cursor
                         >
                             Full
                             <br />

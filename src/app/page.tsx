@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Cursor, ScrollProgress } from "@/components/ui/Chrome";
+import { ScrollProgress } from "@/components/ui/Chrome";
+import { Intro } from "@/components/ninja/Intro";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -13,8 +14,8 @@ export default function Home() {
         <>
             <div className="ambient" aria-hidden />
             <div className="grain" aria-hidden />
+            <Intro />
             <ScrollProgress />
-            <Cursor />
             <Navbar />
             <main className="relative z-10">
                 <Hero />

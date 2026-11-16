@@ -4,16 +4,6 @@
 @theme inline {
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
-    --animate-scroll-line: scroll-line 1.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-}
-
-@keyframes scroll-line {
-    0% {
-        transform: translateY(-100%);
-    }
-    100% {
-        transform: translateY(200%);
-    }
 }
 
 :root {
@@ -86,22 +76,38 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Landing intro: hidden once seen (class set by a boot script / the intro itself) */
+.intro-skip .intro-overlay {
+    display: none;
+}
+
+/* Sword flames */
+.flame {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: flicker 0.5s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%,
+    100% {
+        transform: scaleY(1) skewX(0deg);
+    }
+    25% {
+        transform: scaleY(1.25) skewX(-6deg);
+    }
+    50% {
+        transform: scaleY(0.85) skewX(4deg);
+    }
+    75% {
+        transform: scaleY(1.1) skewX(-2deg);
+    }
+}
+
 /* Outlined display text */
 .text-stroke {
     color: transparent;
     -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    body,
-    a,
-    button {
-        cursor: none;
-    }
-    input,
-    textarea {
-        cursor: text;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {

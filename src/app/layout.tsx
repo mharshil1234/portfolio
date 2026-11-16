@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { introBootScript } from "@/lib/intro";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -18,7 +19,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        // suppressHydrationWarning: the boot script may add a class to <html> before hydration
+        <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: introBootScript }} />
+            </head>
             <body>
                 <SmoothScroll>{children}</SmoothScroll>
                 <Analytics />
