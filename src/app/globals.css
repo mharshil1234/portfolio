@@ -1,60 +1,175 @@
 @import "tailwindcss";
-
-:root {
-    --background: #ffffff;
-    --foreground: #171717;
-}
+@import "lenis/dist/lenis.css";
 
 @theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
+    --color-paper: #ebe3d3;
+    --color-ink: #14110f;
+    --color-seal: #c4161c;
+    --color-wood: #4a2e18;
 }
 
-@media (prefers-color-scheme: dark) {
-:root {
-    --background: #0f0f13;
-    --foreground: #ededed;
+/* Rice paper surface: warm cream, faint fibres and a darker edge */
+.paper {
+    background-color: var(--color-paper);
+    background-image:
+        radial-gradient(ellipse at center, transparent 55%, rgba(80, 50, 20, 0.22)),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 }
+
+/* Wooden scroll rod */
+.rod {
+    background: linear-gradient(90deg, #2a170a, #6b4423 40%, #8a5a30 55%, #3a2210);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.rod-h {
+    background: linear-gradient(180deg, #2a170a, #6b4423 40%, #8a5a30 55%, #3a2210);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Ink brush swipe used behind the active nav item */
+.brush-swipe {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpath d='M4 22 C10 8 40 6 70 7 C92 8 112 6 117 14 C120 22 112 32 84 33 C58 35 26 36 10 32 C3 30 1 27 4 22 Z' fill='%23ece6da'/%3E%3C/svg%3E")
+        center / 100% 100% no-repeat;
+}
+
+/* Wooden training board: dark planks with grain and a vignette */
+.board {
+    background-color: #3b2414;
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 86px, rgba(0, 0, 0, 0.5) 86px 89px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 11px),
+        linear-gradient(180deg, #4d3019, #2b190c);
+    box-shadow:
+        inset 0 0 90px rgba(0, 0, 0, 0.75),
+        0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+:root {
+    --bg: #050505;
+    color-scheme: dark;
+}
+
+html {
+    background: var(--bg);
 }
 
 body {
-    position: relative;
-    color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: #fff;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    overflow-x: hidden;
 }
 
-.page-wrapper {
-    position: relative;
-    background:
-        radial-gradient(ellipse 120% 60% at 50% 0%, rgba(168, 85, 247, 0.08), transparent 60%),
-        #0f0f13;
-    background-attachment: fixed;
+::selection {
+    background: #fb923c;
+    color: #fff;
 }
 
-.page-wrapper::before {
-    content: '';
+/* Ambient background: slow drifting colour blobs + film grain */
+.ambient {
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
     z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
 }
 
-.section {
-    background: transparent;
+.ambient::before,
+.ambient::after {
+    content: "";
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 9999px;
+    filter: blur(120px);
+    opacity: 0.1;
+    animation: drift 28s ease-in-out infinite alternate;
 }
 
-@keyframes ripple {
+.ambient::before {
+    background: #ea580c;
+    top: -20vmax;
+    left: -15vmax;
+}
+
+.ambient::after {
+    background: #0891b2;
+    bottom: -25vmax;
+    right: -20vmax;
+    animation-delay: -14s;
+}
+
+@keyframes drift {
     to {
-        transform: scale(40);
-        opacity: 0;
+        transform: translate(12vmax, 8vmax) scale(1.15);
     }
 }
 
-.animate-ripple {
-    animation: ripple 0.6s ease-out forwards;
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Landing intro: hidden once seen (class set by a boot script / the intro itself) */
+.intro-skip .intro-overlay {
+    display: none;
+}
 
+/* Sword flames */
+.flame {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: flicker 0.5s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%,
+    100% {
+        transform: scaleY(1) skewX(0deg);
+    }
+    25% {
+        transform: scaleY(1.25) skewX(-6deg);
+    }
+    50% {
+        transform: scaleY(0.85) skewX(4deg);
+    }
+    75% {
+        transform: scaleY(1.1) skewX(-2deg);
+    }
+}
+
+/* Outlined display text */
+.text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Tailwind v4 gives buttons the default arrow; show the hand on anything clickable */
+@layer base {
+    button:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]) {
+        cursor: pointer;
+    }
+}
+
+/* Safety net: no animation (shurikens, stamps, ninja) can ever cause sideways scrolling on phones */
+body {
+    overflow-x: clip;
+}
