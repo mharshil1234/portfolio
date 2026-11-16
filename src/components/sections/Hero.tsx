@@ -56,7 +56,7 @@ export function Hero() {
 
             <div className="hero-content pointer-events-none relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-24 sm:pb-28">
                 <p className="hero-fade mb-3 font-mono text-sm uppercase tracking-[0.3em] text-white/60">
-                    Hi, I&apos;m · {profile.role}
+                    {profile.role}
                 </p>
                 <RevealHeading
                     as="h1"

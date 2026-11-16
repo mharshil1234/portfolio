@@ -62,7 +62,7 @@ export function About() {
                 </TiltCard>
 
                 <div>
-                    <SectionHeader number="01" label="The Shinobi" title="I make the web feel alive." className="mb-10" />
+                    <SectionHeader number="01" label="The Shinobi" title="I build for the web." className="mb-10" />
                     <ScrubText text={profile.about} className="text-2xl font-medium leading-snug text-white sm:text-3xl" />
                 </div>
             </div>

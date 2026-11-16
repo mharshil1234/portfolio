@@ -14,7 +14,7 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
     const classified = project.links.length === 0;
 
     return (
-        <article className="project-card relative flex w-full shrink-0 md:h-[min(62vh,34rem)] md:w-[min(44rem,72vw)]">
+        <article className="project-card relative flex w-full shrink-0 md:h-[min(58vh,28rem)] md:w-[min(44rem,72vw)]">
             <div className="rod-l rod absolute -bottom-3 -top-3 left-0 z-10 w-4 rounded-full" />
             <div className="rod-r rod absolute -bottom-3 -top-3 right-0 z-10 w-4 rounded-full" />
 
@@ -26,7 +26,9 @@ function MissionScroll({ project, index }: { project: Project; index: number }) 
 
                 <p className="relative flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
                     <span className="h-2.5 w-2.5 rotate-45" style={{ background: project.accent }} />
-                    Mission {String(index + 1).padStart(2, "0")} · {project.subtitle}
+                    Mission {String(index + 1).padStart(2, "0")}
+                    <span className="h-px w-6 bg-current opacity-40" />
+                    {project.subtitle}
                 </p>
                 <h3 className="relative mt-3 text-4xl font-black tracking-tight sm:text-6xl">{project.name}</h3>
                 <p className="relative mt-5 max-w-xl text-base leading-relaxed text-ink/75 sm:text-lg">{project.description}</p>
@@ -146,7 +148,9 @@ export function Projects() {
                     <SectionHeader number="04" label="Missions" title="Completed missions." accent="#fbbf24" />
                     <p className="mt-6 max-w-sm text-white/60">
                         Things I&apos;ve built and shipped, from contest infrastructure to real-time social apps.
-                        <span className="hidden md:inline"> Keep scrolling →</span>
+                        <span className="hidden items-center gap-1.5 md:inline-flex">
+                            &nbsp;Keep scrolling <FaArrowRight size={11} />
+                        </span>
                     </p>
                 </div>
 

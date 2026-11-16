@@ -10,7 +10,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
     title: "Harshil Maheshwari | Full Stack Developer",
-    description: "Portfolio of Harshil Maheshwari showcasing projects, clubs and expertise",
+    description: "Harshil Maheshwari, full stack developer. Projects, skills, clubs and contact.",
 };
 
 export const viewport: Viewport = {
