@@ -46,7 +46,7 @@ export function Hero() {
 
     return (
         <section id="hero" ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden">
-            <div className="hero-canvas absolute inset-0 will-change-transform">
+            <div className="hero-canvas absolute inset-0 will-change-transform [mask-image:linear-gradient(to_bottom,black_70%,transparent)]">
                 <HeroScene />
             </div>
 
@@ -100,7 +100,7 @@ export function Hero() {
             </div>
 
             <p className="hero-fade pointer-events-none absolute right-6 top-28 z-10 hidden max-w-[12rem] text-right font-mono text-xs text-white/40 md:block">
-                psst — poke the blob ↓
+                psst — move your cursor through me
             </p>
         </section>
     );
