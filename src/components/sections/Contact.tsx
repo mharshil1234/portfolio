@@ -51,22 +51,37 @@ export function Contact() {
     const [loading, setLoading] = useState(false);
     const [toast, setToast] = useState<ToastState>(null);
     const closeToast = useCallback(() => setToast(null), []);
-    const letter = useRef<HTMLDivElement>(null);
-    const seal = useRef<HTMLDivElement>(null);
+    const paper = useRef<HTMLDivElement>(null);
+    const bottomRod = useRef<HTMLDivElement>(null);
+    const sent = useRef<HTMLDivElement>(null);
 
     const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-    /** Stamp the letter with a seal, send it flying, then bring a fresh sheet back. */
-    const playDelivered = () => {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        gsap.timeline()
-            .fromTo(seal.current, { scale: 2.6, opacity: 0, rotate: -24 }, { scale: 1, opacity: 1, rotate: -10, duration: 0.25, ease: "power4.in" })
-            .to(letter.current, { keyframes: [{ x: -4 }, { x: 3 }, { x: 0 }], duration: 0.15 })
-            .to(letter.current, { y: -60, x: 140, rotate: 8, opacity: 0, duration: 0.6, ease: "power2.in", delay: 0.6 })
-            .set(seal.current, { opacity: 0 })
-            .fromTo(letter.current, { y: 40, x: 0, rotate: 0, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" });
-    };
+    /**
+     * Roll the letter up into its top rod (message still written on it), stamp a SENT seal
+     * with a confirmation line, then unroll a fresh, empty sheet. Resolves when finished.
+     */
+    const playDelivered = () =>
+        new Promise<void>((resolve) => {
+            const h = paper.current!.offsetHeight;
+            const roll = { duration: 0.8, ease: "power3.inOut" };
+            gsap.timeline({ onComplete: resolve })
+                .fromTo(paper.current, { clipPath: "inset(0% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 100% 0%)", ...roll })
+                .to(bottomRod.current, { y: -h, ...roll }, 0)
+                .add(() => setForm(EMPTY))
+                .fromTo(sent.current, { autoAlpha: 0, y: -8 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" })
+                .fromTo(
+                    sent.current!.querySelector(".hanko"),
+                    { scale: 2.4, opacity: 0, rotate: -24 },
+                    { scale: 1, opacity: 1, rotate: -8, duration: 0.25, ease: "power4.in" },
+                    "<0.1",
+                )
+                .to(sent.current, { autoAlpha: 0, duration: 0.3 }, "+=1.8")
+                .to(paper.current, { clipPath: "inset(0% 0% 0% 0%)", ...roll, duration: 0.9 })
+                .to(bottomRod.current, { y: 0, ...roll, duration: 0.9 }, "<")
+                .set([paper.current, bottomRod.current], { clearProps: "clipPath,transform" });
+        });
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,9 +89,12 @@ export function Contact() {
         setToast(null);
         const res = await sendEmail(form);
         if (res.success) {
-            playDelivered();
-            setToast({ type: "success", message: "Message sent! I'll get back to you soon." });
-            setForm(EMPTY);
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                setToast({ type: "success", message: "Message sent! I'll get back to you soon." });
+                setForm(EMPTY);
+            } else {
+                await playDelivered();
+            }
         } else {
             setToast({ type: "error", message: res.error });
         }
@@ -97,9 +115,25 @@ export function Contact() {
 
                 <div className="mt-20 grid gap-16 md:grid-cols-[3fr_2fr]">
                     {/* The letter */}
-                    <div ref={letter} className="relative">
+                    <div className="relative">
                         <div className="rod-h relative z-10 -mx-2 h-3 rounded-full" />
-                        <div className="paper relative px-7 pb-10 pt-8 text-ink sm:px-10">
+
+                        {/* Confirmation shown under the rolled-up letter */}
+                        <div
+                            ref={sent}
+                            role="status"
+                            className="invisible absolute inset-x-0 top-10 flex items-center justify-center gap-5 opacity-0"
+                        >
+                            <Hanko size={72} rotate={-8}>
+                                SENT
+                            </Hanko>
+                            <div>
+                                <p className="text-2xl font-black">Message sent.</p>
+                                <p className="text-white/60">I&apos;ll get back to you soon.</p>
+                            </div>
+                        </div>
+
+                        <div ref={paper} className="paper relative px-7 pb-10 pt-8 text-ink sm:px-10">
                             <p className="mb-2 text-2xl font-black italic text-ink/80">Dear Harshil,</p>
                             <p className="mb-6 text-sm text-ink/55">Write me a message. I read every one.</p>
                             <form onSubmit={onSubmit} className="space-y-8">
@@ -129,15 +163,8 @@ export function Contact() {
                                     )}
                                 </button>
                             </form>
-
-                            {/* Delivered seal (stamped on success) */}
-                            <div ref={seal} className="pointer-events-none absolute right-8 top-8 opacity-0">
-                                <Hanko size={96} rotate={-10}>
-                                    SENT
-                                </Hanko>
-                            </div>
                         </div>
-                        <div className="rod-h relative z-10 -mx-2 h-3 rounded-full" />
+                        <div ref={bottomRod} className="rod-h relative z-10 -mx-2 h-3 rounded-full" />
                     </div>
 
                     <Stagger className="flex flex-col justify-end">
