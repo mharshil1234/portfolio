@@ -112,7 +112,8 @@ export function Navbar() {
 
                     <a
                         href={profile.resume}
-                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="hidden rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-2 text-sm font-semibold md:inline-block"
                     >
                         Resume
@@ -153,13 +154,14 @@ export function Navbar() {
                         ))}
                         <motion.a
                             href={profile.resume}
-                            download
+                            target="_blank"
+                            rel="noopener noreferrer"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.6 }}
                             className="mt-10 self-start rounded-full bg-white px-6 py-3 font-semibold text-black"
                         >
-                            Download Resume
+                            View Resume
                         </motion.a>
                     </motion.div>
                 )}

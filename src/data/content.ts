@@ -8,7 +8,7 @@ export const profile = {
     about:
         "I build full stack web apps, from the database to the UI. Most recently I led Cookoff 11, a contest platform where a Go backend judged code for 500+ live participants. I like fast backends, clean frontends and shipping things people actually use.",
     photo: "/me2.jpeg",
-    resume: "/Harshil_Maheshwari_Resume.pdf",
+    resume: "/resume",
     email: "mharshil1234@gmail.com",
 };
 

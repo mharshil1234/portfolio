@@ -96,7 +96,8 @@ export function Hero() {
                         <Magnetic>
                             <a
                                 href={profile.resume}
-                                download
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105"
                             >
                                 Resume
